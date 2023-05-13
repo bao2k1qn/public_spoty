@@ -12,15 +12,22 @@ interface IVerify {
 
 export const VerifyPayment = ({ state, setVerifyPayment }: IVerify) => {
     const [otp, setOtp] = useState<string>('');
+    const [sendOTP, setSendOTP] = useState<string>('');
     const [error, setError] = useState(false);
     const [success, setSuccess] = useState(false);
 
     const handleOnSendOtp = async () => {
         setError(false);
-        await authService.sendOTPbyPhone();
+        try {
+            const res = await authService.sendOTPbyPhone();
+            setSendOTP('success');
+        } catch (err) {
+            setSendOTP('error');
+        }
     };
 
     const handleOnSubmitPayment = async () => {
+        setSendOTP('');
         try {
             const res = await authService.checkOTP(otp);
             setVerifyPayment(true);
@@ -33,6 +40,11 @@ export const VerifyPayment = ({ state, setVerifyPayment }: IVerify) => {
     };
     return (
         <div>
+            {sendOTP === 'success' && <AlertCustom type="success" message={'Đã gửi mã OTP đến bạn!'} />}
+            {sendOTP === 'error' && (
+                <AlertCustom type="error" message={'Có lỗi xảy ra trong khi gửi mã OTP đến bạn!'} />
+            )}
+
             {error && <AlertCustom type="error" message={'Nhập sai mã OTP!'} />}
             {success && <AlertCustom type="success" message={'Xác nhận OTP thành công!'} />}
 

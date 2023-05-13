@@ -1,12 +1,12 @@
 // Create Model
 import * as React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import TimePriceTable from '../../components/timepricetable';
 // Tabs
 import { Tab } from '@mui/material';
 import { TabList, TabPanel, TabContext } from '@mui/lab';
 import StarIcon from '@mui/icons-material/StarBorderPurple500';
-
+import { TypographyHeading2Style } from './styles';
 const IconTabs = ({ data }: any) => {
     const [value, setValue] = React.useState('0');
 
@@ -47,7 +47,7 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 1000,
+    maxWidth: 1000,
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
@@ -55,12 +55,13 @@ const style = {
 };
 
 const PriceTable = ({ data }: { data: any }) => {
+    console.log(data);
     return (
         <div>
             <Box sx={style}>
-                <Typography id="modal-modal-title" variant="h5" component="h2" textAlign="center" mb={2}>
-                    Bảng giá
-                </Typography>
+                <TypographyHeading2Style id="modal-modal-title" textAlign="center" mb={2}>
+                    Bảng giá thuê sân
+                </TypographyHeading2Style>
                 <IconTabs data={data} />
             </Box>
         </div>

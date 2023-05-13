@@ -1,9 +1,8 @@
 import moment from 'moment';
-import { useState, useEffect, useContext, ReactNode, Fragment } from 'react';
-import { Container, Box, Stepper, Step, Button } from '@mui/material';
+import { useState, useEffect, useContext, ReactNode, Fragment, createContext } from 'react';
+import { Box, Stepper, Step, Button } from '@mui/material';
 import EastIcon from '@mui/icons-material/East';
 import WestIcon from '@mui/icons-material/West';
-import DoneIcon from '@mui/icons-material/Done';
 import { AppointmentModel } from '@devexpress/dx-react-scheduler';
 
 import Payment from './payment';
@@ -12,6 +11,7 @@ import stadiumService from '../../services/stadiumService';
 import { StyledStepLabel, TypographySubheadingStyle } from './styles';
 import { StdContext } from '../../pages/stadium';
 import { IArea } from './interfaces';
+import { OrderReceiver } from './orderReceiver';
 
 export interface IItem extends AppointmentModel {
     name: string;
@@ -45,12 +45,22 @@ const handleData = (data: any, quantity: number): IItem[] => {
 
 const steps = ['Đặt sân', 'Thanh toán', 'Hoàn tất'];
 
+export const OrderContext = createContext<{
+    state: any;
+    dispatch: React.Dispatch<React.SetStateAction<any>>;
+}>({
+    state: {},
+    dispatch: () => null,
+});
+
 const HorizontalLinearStepper = () => {
     const { state } = useContext(StdContext);
 
     const [activeStep, setActiveStep] = useState<number>(0);
     const [cartItems, setCartItems] = useState<ICartItem>({});
     const [initCartItem, setInitCartItem] = useState<boolean>(true);
+
+    const [order, setOrder] = useState({});
 
     useEffect(() => {
         state.areas?.map((value: IArea) => {
@@ -61,7 +71,7 @@ const HorizontalLinearStepper = () => {
             };
             fetchScheduleData();
         });
-    }, [state.areas]);
+    }, [state.areas, order]);
 
     const handleNext = () => setActiveStep((prevActiveStep) => prevActiveStep + 1);
     const handleBack = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -79,68 +89,67 @@ const HorizontalLinearStepper = () => {
     };
 
     return (
-        <Box sx={{ width: '100%' }}>
-            <Stepper activeStep={activeStep} sx={{ color: (theme) => theme.color.main }}>
-                {steps.map((label: string) => {
-                    const stepProps: { completed?: boolean } = {};
-                    const labelProps: {
-                        optional?: ReactNode;
-                    } = {};
-                    return (
-                        <Step key={label} {...stepProps}>
-                            <StyledStepLabel {...labelProps}>{label}</StyledStepLabel>
-                        </Step>
-                    );
-                })}
-            </Stepper>
-            {activeStep == 0 && (
-                <Fragment>
-                    <BookStadiumArea addToCart={addToCart} CartItem={cartItems} />
-                </Fragment>
-            )}
-            {activeStep == 1 && (
-                <Fragment>
-                    <Payment CartItem={cartItems} deleteItem={deleteItem} handleNext={handleNext} />
-                </Fragment>
-            )}
-            {activeStep == 2 && (
-                <Fragment>
-                    <Container sx={{ textAlign: 'center' }}>
-                        <DoneIcon sx={{ fontSize: '70px', width: '100%', color: (theme) => theme.color.main }} />
-                        <TypographySubheadingStyle>Thanh toán thành công</TypographySubheadingStyle>
-                    </Container>
-                </Fragment>
-            )}
-            {activeStep === steps.length ? (
-                <Fragment>
-                    <TypographySubheadingStyle>Hoàn tất các bước đặt sân</TypographySubheadingStyle>
-                    <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                        <Box sx={{ flex: '1 1 auto' }} />
-                        <Button onClick={handleReset}>Đặt lại</Button>
+        <OrderContext.Provider value={{ state: order, dispatch: setOrder }}>
+            <Box sx={{ width: '100%' }}>
+                <Stepper activeStep={activeStep} sx={{ color: (theme) => theme.color.main }}>
+                    {steps.map((label: string) => {
+                        const stepProps: { completed?: boolean } = {};
+                        const labelProps: {
+                            optional?: ReactNode;
+                        } = {};
+                        return (
+                            <Step key={label} {...stepProps}>
+                                <StyledStepLabel {...labelProps}>{label}</StyledStepLabel>
+                            </Step>
+                        );
+                    })}
+                </Stepper>
+                {activeStep == 0 && (
+                    <Fragment>
+                        <BookStadiumArea addToCart={addToCart} CartItem={cartItems} />
+                    </Fragment>
+                )}
+                {activeStep == 1 && (
+                    <Fragment>
+                        <Payment CartItem={cartItems} deleteItem={deleteItem} handleNext={handleNext} />
+                    </Fragment>
+                )}
+                {activeStep == 2 && (
+                    <Fragment>
+                        <OrderReceiver />
+                    </Fragment>
+                )}
+                {activeStep === steps.length ? (
+                    <Fragment>
+                        <TypographySubheadingStyle>Hoàn tất các bước đặt sân</TypographySubheadingStyle>
+                        <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+                            <Box sx={{ flex: '1 1 auto' }} />
+                            <Button onClick={handleReset}>Đặt lại</Button>
+                        </Box>
+                    </Fragment>
+                ) : (
+                    <Box sx={{ display: 'flex', justifyContent: 'end', mt: '10px' }}>
+                        <Button
+                            color="inherit"
+                            size="large"
+                            disabled={activeStep === 0}
+                            onClick={handleBack}
+                            startIcon={<WestIcon />}
+                        >
+                            Quay lại
+                        </Button>
+                        <Button
+                            size="large"
+                            onClick={handleNext}
+                            endIcon={<EastIcon />}
+                            disabled={initCartItem || activeStep === 1}
+                        >
+                            {activeStep === steps.length - 1 ? 'Hoàn tất' : 'Tiếp theo'}
+                        </Button>
                     </Box>
-                </Fragment>
-            ) : (
-                <Box sx={{ display: 'flex', justifyContent: 'end', mt: '10px' }}>
-                    <Button
-                        color="inherit"
-                        size="large"
-                        disabled={activeStep === 0}
-                        onClick={handleBack}
-                        startIcon={<WestIcon />}
-                    >
-                        Quay lại
-                    </Button>
-                    <Button
-                        size="large"
-                        onClick={handleNext}
-                        endIcon={<EastIcon />}
-                        disabled={initCartItem || activeStep === 1}
-                    >
-                        {activeStep === steps.length - 1 ? 'Hoàn tất' : 'Tiếp theo'}
-                    </Button>
-                </Box>
-            )}
-        </Box>
+                )}
+            </Box>
+        </OrderContext.Provider>
     );
 };
 export default HorizontalLinearStepper;

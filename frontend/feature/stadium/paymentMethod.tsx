@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Box, Button, FormControl, FormControlLabel, Radio, RadioGroup } from '@mui/material';
 
 import { TypographyHeading2Style } from './styles';
 import AlertCustom from '../../components/alert';
 import OrderService from '../../services/orderService';
 import { DataPaymentType } from './interfaces';
+import { OrderContext } from './stepper';
 
 interface IPaymentMethod {
     data: DataPaymentType;
@@ -14,6 +15,7 @@ interface IPaymentMethod {
 }
 
 export const PaymentMethod = ({ data, updateData, verifyPayment, handleNext }: IPaymentMethod) => {
+    const { dispatch } = useContext(OrderContext);
     const [typePaymentMethod, setTypePaymentMethod] = useState<string>('Cash');
     const [errorOTP, setErrorOTP] = useState(false);
     const [emptyBill, setEmptyBill] = useState(false);
@@ -29,13 +31,19 @@ export const PaymentMethod = ({ data, updateData, verifyPayment, handleNext }: I
             setEmptyBill(true);
         }
         if (verifyPayment && data.stadium_areas.length > 0) {
+        // if (data.stadium_areas.length > 0) {
             setErrorOTP(false);
-            const order = await OrderService.createOrder(data as any);
-            if (typePaymentMethod === 'Stribe') {
-                const payment = await OrderService.payment_byVisa(order.data.data.order._id);
-                window.open(payment.data.session.url, '_blank');
+            try {
+                const orderRes = await OrderService.createOrder(data as any);
+                dispatch(orderRes.data.data.order);
+                if (typePaymentMethod === 'Stripe') {
+                    const payment = await OrderService.payment_byVisa(orderRes.data.data.order._id);
+                    window.open(payment.data.session.url, '_blank');
+                }
+                handleNext();
+            } catch (error) {
+                // console.log(error);
             }
-            handleNext();
         } else setErrorOTP(true);
     };
     return (

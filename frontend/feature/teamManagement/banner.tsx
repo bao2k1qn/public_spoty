@@ -47,7 +47,7 @@ const Banner = ({ title, imageBG }: { title: string; imageBG: any }) => {
                 aria-describedby="modal-modal-description"
             >
                 <>
-                    <CreateForm />
+                    <CreateForm handleClose={handleCloseMatchModal}/>
                 </>
             </Modal>
             <Modal

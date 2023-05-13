@@ -24,19 +24,10 @@ const StadiumDetail = ({ data }: any) => {
     return (
         <PaperStyle elevation={10} sx={{ width: { xs: '85%', md: '500px' } }}>
             <TypographyHeading2Style>Thông tin sân bóng chi tiết</TypographyHeading2Style>
+            <TextFieldStyle label="Tên" name="Name" value={data.name} fullWidth required focused />
             <TextFieldStyle
-                label="Name"
-                name="Name"
-                placeholder="Enter email or phone number"
-                value={data.name}
-                fullWidth
-                required
-                focused
-            />
-            <TextFieldStyle
-                label="Contact"
+                label="Liên hệ (SDT)"
                 name="contact"
-                placeholder="Enter contact"
                 variant="outlined"
                 value={data.contact}
                 fullWidth
@@ -45,9 +36,8 @@ const StadiumDetail = ({ data }: any) => {
                 sx={{ mt: '15px' }}
             />
             <TextFieldStyle
-                label="Location"
+                label="Địa chỉ"
                 name="location"
-                placeholder="Enter location"
                 variant="outlined"
                 value={`${data.location.ward.name}, ${data.location.district.name}, ${data.location.province.name}`}
                 fullWidth
@@ -56,9 +46,8 @@ const StadiumDetail = ({ data }: any) => {
                 sx={{ mt: '15px' }}
             />
             <TextFieldStyle
-                label="Create At"
+                label="Ngày tạo"
                 name="createAt"
-                placeholder="Enter createAt"
                 variant="outlined"
                 value={data.createAt}
                 fullWidth
@@ -68,9 +57,8 @@ const StadiumDetail = ({ data }: any) => {
             />
             <Box sx={{ display: 'flex' }}>
                 <TextFieldStyle
-                    label="Time open"
+                    label="Thời gian mở cửa (h)"
                     name="time_open"
-                    placeholder="Enter time_open"
                     variant="outlined"
                     value={data.time_open}
                     fullWidth
@@ -79,9 +67,8 @@ const StadiumDetail = ({ data }: any) => {
                     sx={{ mt: '15px' }}
                 />
                 <TextFieldStyle
-                    label="Time clode"
+                    label="Thời gian đóng cửa (h)"
                     name="time_clode"
-                    placeholder="Enter time_clode"
                     variant="outlined"
                     value={data.time_close}
                     fullWidth
@@ -91,9 +78,8 @@ const StadiumDetail = ({ data }: any) => {
                 />
             </Box>
             <TextFieldStyle
-                label="Description"
+                label="Mô tả"
                 name="description"
-                placeholder="Enter description"
                 variant="outlined"
                 value={data.description}
                 fullWidth
@@ -102,9 +88,8 @@ const StadiumDetail = ({ data }: any) => {
                 sx={{ mt: '15px' }}
             />
             <TextFieldStyle
-                label="Rules"
+                label="Luật lệ"
                 name="rules"
-                placeholder="Enter rules"
                 variant="outlined"
                 value={data.rules}
                 fullWidth
@@ -113,21 +98,21 @@ const StadiumDetail = ({ data }: any) => {
                 sx={{ mt: '15px' }}
             />
             <Box sx={{ mt: '15px' }}>
-                <Typography>Main image</Typography>
+                <Typography>Ảnh chính</Typography>
                 <ImageList cols={3}>
                     <ImageListItem key={data.avatar}>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={`${data.avatar}`} alt={'main images'} />
+                        <img src={`${data.avatar}`} alt={'Ảnh chính'} />
                     </ImageListItem>
                 </ImageList>
             </Box>
             <Box sx={{ mt: '15px' }}>
-                <Typography>Secondary images</Typography>
+                <Typography>Ảnh phụ</Typography>
                 <ImageList cols={3}>
                     {data.images.map((item: any) => (
                         <ImageListItem key={item}>
                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={`${item}`} alt={'secondary images'} />
+                            <img src={`${item}`} alt={'Ảnh phụ'} />
                         </ImageListItem>
                     ))}
                 </ImageList>

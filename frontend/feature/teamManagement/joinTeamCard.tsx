@@ -65,7 +65,7 @@ export const Card = ({ data }: { data: ITeam }) => {
                             </Grid>
                             <Grid item sx={{ textAlign: 'right' }}>
                                 <ButtonStyle variant="contained" sx={{ marginRight: 2 }} onClick={handleDetail}>
-                                    Chi tiết
+                                    Thành viên
                                 </ButtonStyle>
                                 <ButtonStyle variant="contained" onClick={handleDelete}>
                                     Rời

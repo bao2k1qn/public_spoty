@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Box, Grid, Typography, Button, Popover, Autocomplete, TextField } from '@mui/material';
 import { TypographyHeading2Style } from '../../components/typographyHeading';
 import { PaperStyles, Img } from './styles';
+import moment from 'moment';
 
 export const AssignMatch = ({ data }: { data: any }) => {
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -27,8 +28,8 @@ export const AssignMatch = ({ data }: { data: any }) => {
             <PaperStyles elevation={3}>
                 <Grid container spacing={2}>
                     <Grid item md={3}>
-                        <Img alt="match" src={data.match.avatar} />
-                        <TypographyHeading2Style sx={{ fontSize: 20 }}>{data.match.name}</TypographyHeading2Style>
+                        <Img alt="match" src={data.myTeam.avatar} />
+                        <TypographyHeading2Style sx={{ fontSize: 20 }}>{data.myTeam.name}</TypographyHeading2Style>
                     </Grid>
                     <Grid item md={6} m={'0 auto'}>
                         <TypographyHeading2Style>VS</TypographyHeading2Style>
@@ -36,19 +37,19 @@ export const AssignMatch = ({ data }: { data: any }) => {
                             <b> Địa chỉ:</b> {data.address}
                         </Typography>
                         <Typography variant="body2" gutterBottom>
-                            <b> Liên hệ:</b> {data.phone}
+                            <b> Liên hệ:</b> {data.contact}
                         </Typography>
                         <Grid container>
                             <Grid item md={7} xs={12}>
                                 <Typography variant="body2" gutterBottom>
                                     {/* <BusinessIcon /> */}
-                                    <b> Độ tuổi:</b> {data.match.age}
+                                    <b> Độ tuổi:</b> {data.myTeam.age}
                                 </Typography>
                             </Grid>
                             <Grid item md={5} xs={12}>
                                 <Typography variant="body2" gutterBottom>
                                     {/* <BusinessIcon /> */}
-                                    <b> Trình độ:</b> {data.match.level}
+                                    <b> Trình độ:</b> {data.myTeam.level}
                                 </Typography>
                             </Grid>
                         </Grid>
@@ -67,12 +68,20 @@ export const AssignMatch = ({ data }: { data: any }) => {
                         <Grid container>
                             <Grid item md={7} xs={12}>
                                 <Typography variant="body2" gutterBottom>
-                                    <b> Thời gian:</b> {data.start_time}
+                                    <b> Thời gian:</b> {moment(data.from).format('DD-MM-YYYY hh:mm')}
                                 </Typography>
                             </Grid>
                             <Grid item md={5} xs={12}>
                                 <Typography variant="body2" gutterBottom>
-                                    <b> Thời lượng:</b> {data.duration}
+                                    <b> Thời lượng:</b>{' '}
+                                    {moment
+                                        .duration(
+                                            moment(data.to, 'YYYY/MM/DD HH:mm').diff(
+                                                moment(data.from, 'YYYY/MM/DD HH:mm'),
+                                            ),
+                                        )
+                                        .asHours()}{' '}
+                                    giờ
                                 </Typography>
                             </Grid>
                         </Grid>

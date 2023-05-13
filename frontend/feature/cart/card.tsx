@@ -20,7 +20,7 @@ import {
 } from './card.styles';
 export default function ImgMediaCard({ stdData }: { stdData: any }) {
     const { state } = useContext(AuthContext);
-    console.log(stdData);
+    // console.log(stdData);
     return (
         <CardStyle>
             <CardMedia component="img" alt="green iguana" height="140" image={stdData.avatar} />
@@ -56,9 +56,7 @@ export default function ImgMediaCard({ stdData }: { stdData: any }) {
                     <BoxStyle>
                         <Box component="div">
                             <TypographyContentStyle>
-                                <strong>
-                                    {stdData.areas?.reduce((prev: number, curr: any) => prev + curr.quantityOrders, 0)}
-                                </strong>
+                                <strong>{stdData.quantityOrder}</strong>
                                 <span> đã đặt</span>
                             </TypographyContentStyle>
                         </Box>
@@ -66,9 +64,11 @@ export default function ImgMediaCard({ stdData }: { stdData: any }) {
                 </Box>
             </CardContent>
             <CardActions sx={{ position: 'absolute', bottom: '0' }}>
-                <ButtonStyle size="small" variant="contained">
-                    Liên hệ zalo
-                </ButtonStyle>
+                <Link href={state.isLoginIn ? `https://zalo.me/${stdData.contact}` : ''}>
+                    <ButtonStyle size="small" variant="contained" disabled={!state.isLoginIn}>
+                        Liên hệ zalo
+                    </ButtonStyle>
+                </Link>
                 <Link href={`/stadium?slug=${stdData.slug}`}>
                     <ButtonStyle size="small" variant="contained">
                         Xem chi tiết

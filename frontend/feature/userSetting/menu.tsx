@@ -81,7 +81,14 @@ const ToolMenuOwner = [
     },
 ];
 
-const TransactionMenu: any[] = [];
+const TransactionMenu: any[] = [
+    {
+        id: 12,
+        icon: <Cloud fontSize="small" />,
+        name: 'Lịch sử giao dịch',
+        path: '/settings/transaction_management',
+    },
+];
 
 const TransactionMenuOwner: any[] = [];
 
@@ -127,7 +134,7 @@ const MenuUser = () => {
                     </Fragment>
                 ))}
             </List>
-            {/* <Title>Giao dịch</Title> */}
+            <Title>Giao dịch</Title>
             <List>
                 {TransactionMenu.map((item) => (
                     <Fragment key={item.id}>
@@ -139,7 +146,7 @@ const MenuUser = () => {
                                     onClick={(event) => handleListItemClick(event, item.id)}
                                 >
                                     <ListItemIconStyle>
-                                        <Cloud fontSize="small" />
+                                        {item.icon}
                                     </ListItemIconStyle>
                                     <ListItemTextStyle>{item.name}</ListItemTextStyle>
                                 </ListItemButton>

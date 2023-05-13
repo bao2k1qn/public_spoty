@@ -92,7 +92,7 @@ export default function ImageSlider({ avatar, data }: { avatar: string; data: st
                                         // alt={item.title}
                                         loading="lazy"
                                         onClick={(e) => {
-                                            setMainImg(e.target.currentSrc);
+                                            setMainImg((e.target as any).currentSrc);
                                         }}
                                     />
                                 </ImageListItem>
@@ -106,7 +106,7 @@ export default function ImageSlider({ avatar, data }: { avatar: string; data: st
                                         // alt={item.title}
                                         loading="lazy"
                                         onClick={(e) => {
-                                            setMainImg(e.target.currentSrc);
+                                            setMainImg((e.target as any).currentSrc);
                                         }}
                                     />
                                 </ImageListItem>

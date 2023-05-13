@@ -5,7 +5,6 @@ import {
     Button,
     Card,
     CardActionArea,
-    CardActions,
     CardContent,
     CardMedia,
     Container,
@@ -13,6 +12,7 @@ import {
     Grid,
     IconButton,
     Paper,
+    Stack,
     Typography,
 } from '@mui/material';
 
@@ -22,7 +22,7 @@ import { ICartItem } from './stepper';
 import { CalendarMonthIconStyle, Diversity3IconStyle, TypographyHeading2Style } from './styles';
 import promotionService from '../../services/promotionService';
 import { DataPaymentType } from './interfaces';
-
+import { VND } from '../../utils/helper';
 interface ITotalBill {
     data: DataPaymentType;
     CartItem: ICartItem;
@@ -51,13 +51,13 @@ interface IMultiActionAreaCard {
 export const MultiActionAreaCard = ({ pro, handleApplyVoucher }: IMultiActionAreaCard) => {
     const handleApply = () => {};
     return (
-        <Card sx={{ maxWidth: 250, maxHeight: 250 }}>
+        <Card sx={{ minWidth: 250, maxHeight: 250 }}>
             <CardActionArea>
                 <CardMedia component="img" height={100} image={pro.image} alt="green iguana" />
                 <CardContent>
                     <strong>{pro.name}</strong>
-                    <div>Bắt đầu: {moment(pro.start_date).format('HH[h]mm, DD/MM/YYYY').toString()}</div>
-                    <div>Kết thúc: {moment(pro.end_date).format('HH[h]mm, DD/MM/YYYY').toString()}</div>
+                    {/* <div>Bắt đầu: {moment(pro.start_date).format('HH[h]mm, DD/MM/YYYY').toString()}</div> */}
+                    <div>Hạn sử dụng: {moment(pro.end_date).format('HH[h]mm, DD/MM/YYYY').toString()}</div>
                     <div>Mức giảm giá: {pro.percent}%</div>
                     <div>Số lượng: {pro.quantity}</div>
                     <Box sx={{ textAlign: 'end' }}>
@@ -103,7 +103,7 @@ export const SingleBill = ({ value, deleteItem }: ISingleBill) => {
                         </Typography>
                     </Grid>
                     <Grid item xs={3}>
-                        <Typography textAlign={'right'}>{value.totalPrice} VND</Typography>
+                        <Typography textAlign={'right'}>{VND.format(value.totalPrice)}</Typography>
                     </Grid>
                 </Grid>
             </Grid>
@@ -180,10 +180,12 @@ export const TotalBill = ({ data, CartItem, deleteItem, updateData }: ITotalBill
             <Container>
                 <Divider sx={{ m: '16px 0' }} />
                 <strong>Các chương trình khuyến mại</strong>
-                <Box sx={{ marginTop: '10px' }}>
-                    {pros.map((pro: IPro) => (
-                        <MultiActionAreaCard key={pro._id} pro={pro} handleApplyVoucher={handleApplyVoucher} />
-                    ))}
+                <Box sx={{ marginTop: '10px', overflowX: 'scroll', paddingBottom: '10px' }}>
+                    <Stack direction="row" spacing={2}>
+                        {pros.map((pro: IPro) => (
+                            <MultiActionAreaCard key={pro._id} pro={pro} handleApplyVoucher={handleApplyVoucher} />
+                        ))}
+                    </Stack>
                 </Box>
                 <Divider sx={{ m: '16px 0' }} />
                 <strong>Thông tin đơn hàng</strong>
@@ -212,7 +214,7 @@ export const TotalBill = ({ data, CartItem, deleteItem, updateData }: ITotalBill
                             <Typography>Tổng tiền:</Typography>
                         </Grid>
                         <Grid item xs={3} textAlign={'right'}>
-                            <Typography>{totalPrice} VND</Typography>
+                            <Typography>{VND.format(totalPrice)}</Typography>
                         </Grid>
                     </Grid>
                     <Grid container item>
@@ -220,7 +222,9 @@ export const TotalBill = ({ data, CartItem, deleteItem, updateData }: ITotalBill
                             <Typography>Giảm giá:</Typography>
                         </Grid>
                         <Grid item xs={3}>
-                            <Typography textAlign={'right'}>- {discount} VND</Typography>
+                            <Typography textAlign={'right'}>
+                                {discount === 0 ? '' : '-'} {VND.format(discount)}
+                            </Typography>
                         </Grid>
                     </Grid>
                     <Grid container item>
@@ -228,7 +232,9 @@ export const TotalBill = ({ data, CartItem, deleteItem, updateData }: ITotalBill
                             <Typography>Sử dụng điểm tích lũy:</Typography>
                         </Grid>
                         <Grid item xs={3}>
-                            <Typography textAlign={'right'}>- {score} VND</Typography>
+                            <Typography textAlign={'right'}>
+                                {score === 0 ? '' : '-'} {VND.format(score)}
+                            </Typography>
                         </Grid>
                     </Grid>
                     <Grid container item>
@@ -236,7 +242,9 @@ export const TotalBill = ({ data, CartItem, deleteItem, updateData }: ITotalBill
                             <Typography>Voucher:</Typography>
                         </Grid>
                         <Grid item xs={3}>
-                            <Typography textAlign={'right'}>- {voucher} VND</Typography>
+                            <Typography textAlign={'right'}>
+                                {voucher === 0 ? '' : '-'} {VND.format(voucher)}
+                            </Typography>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -246,7 +254,9 @@ export const TotalBill = ({ data, CartItem, deleteItem, updateData }: ITotalBill
                         <Typography>Tổng thanh toán:</Typography>
                     </Grid>
                     <Grid item xs={3}>
-                        <Typography textAlign={'right'}>{totalPrice - discount - voucher - score} VND</Typography>
+                        <Typography textAlign={'right'}>
+                            {VND.format(totalPrice - discount - voucher - score)}
+                        </Typography>
                     </Grid>
                 </Grid>
             </Container>

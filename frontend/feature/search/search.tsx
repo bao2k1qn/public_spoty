@@ -7,7 +7,6 @@ import { TextFieldStyle } from '../../components/textField';
 import { SelectField } from '../../components/select';
 import { IconButtonStyle } from '../../components/button';
 import { BoxContainStyle, BoxContentStyle, BoxFormControlStyle } from './search.styles';
-import StadiumService from '../../services/stadiumService';
 
 export interface Province {
     name: string;
@@ -48,7 +47,7 @@ const Funds: FundType[] = [
     { min: 300000, max: 1000000 },
 ];
 
-const SearchBar = ({ provinces, setStdData }: { provinces: Province[]; setStdData: any }) => {
+const SearchBar = ({ provinces, handleSubmit }: { provinces: Province[]; handleSubmit: any }) => {
     const [name, setName] = useState<string>('');
     const [funds, setFunds] = useState<string>('0');
     const [provinceId, setProvinceId] = useState<number>(0);
@@ -86,22 +85,16 @@ const SearchBar = ({ provinces, setStdData }: { provinces: Province[]; setStdDat
     const handleChangeFund = (e: SelectChangeEvent<unknown>) => {
         setFunds(String(e.target.value));
     };
-    const handleSubmit = async () => {
-        const data: any = {
-            name,
-            funds,
-            provinceId,
-            districtId,
-            wardId,
-        };
-        const res = await StadiumService.searchStadiums(data);
-        setStdData(res.data.data.stadiums);
+
+    const onHandleSubmit = () => {
+        handleSubmit({ name, funds, provinceId, districtId, wardId });
     };
     return (
         <BoxContainStyle>
             <BoxContentStyle>
                 <TextFieldStyle
                     onChange={(e) => setName(e.target.value)}
+                    value={name}
                     id="standard-search"
                     label="Tên sân bóng"
                     type="search"
@@ -136,7 +129,7 @@ const SearchBar = ({ provinces, setStdData }: { provinces: Province[]; setStdDat
                         ))}
                     </SelectField>
                 </BoxFormControlStyle>
-                <IconButtonStyle size="large" onClick={handleSubmit}>
+                <IconButtonStyle size="large" onClick={onHandleSubmit}>
                     <SearchIcon sx={{ color: 'white' }} />
                 </IconButtonStyle>
             </BoxContentStyle>
