@@ -1,4 +1,4 @@
-import { ReactElement, useCallback, useEffect, useState } from 'react';
+import { createContext, ReactElement, useCallback, useEffect, useState } from 'react';
 
 import type { NextPageWithLayout } from '../_app';
 import { SettingsLayout } from '../../feature/layouts';
@@ -33,6 +33,14 @@ const BoxFormControlStyle = styled(Box)(({ theme }) => ({
         marginTop: '10px',
     },
 }));
+
+export const AreaContext = createContext<{
+    state: any;
+    dispatch?: React.Dispatch<React.SetStateAction<any>>;
+}>({
+    state: {},
+    dispatch: () => null,
+});
 
 const User: NextPageWithLayout = () => {
     const [stadiums, setStadiums] = useState([]);
@@ -104,9 +112,10 @@ const User: NextPageWithLayout = () => {
                         ))}
                     </SelectField>
                 </BoxFormControlStyle>
-                <ButtonStyle variant="contained">Book sân</ButtonStyle>
             </Box>
-            <OrderSchedule area={areaCurr} handleShowOrder={handleShowOrder} />
+            <AreaContext.Provider value={{ state: areas.find((e: any) => (e._id = areaCurr)) }}>
+                <OrderSchedule area={areaCurr} handleShowOrder={handleShowOrder} />
+            </AreaContext.Provider>
             <Modal
                 open={openModal}
                 onClose={handleCloseModal}

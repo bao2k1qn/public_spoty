@@ -1,10 +1,13 @@
 import { http } from '../utils/axios';
+const NUMBER_OF_PAGES = 8;
 interface StadiumSearch {
     name?: string;
     funds?: string;
     provinceId?: number;
     districtId?: number;
     wardId?: number;
+    sort?: any;
+    page?: number;
 }
 class StadiumService {
     async searchStadiums(data: StadiumSearch) {
@@ -26,6 +29,9 @@ class StadiumService {
                     provinceId: data.provinceId === 0 ? undefined : data.provinceId,
                     districtId: data.districtId === 0 ? undefined : data.districtId,
                     wardId: data.wardId === 0 ? undefined : data.wardId,
+                    sort: data.sort ? data.sort : undefined,
+                    page: data.page ? data.page : 1,
+                    limit: NUMBER_OF_PAGES,
                 },
             });
     }

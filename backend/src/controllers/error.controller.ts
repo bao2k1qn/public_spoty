@@ -35,7 +35,7 @@ const handleJsonWebTokenError = (err: Error): ErrorResponse => {
 };
 
 export const ErrorHandler = (err: Error | AppError, req: Request, res: Response, next: NextFunction) => {
-    console.log(err.name + ': ' + err.message);
+    // console.log(err.name + ': ' + err.message);
 
     let errRes: ErrorResponse = {
         statusCode: StatusCodes.INTERNAL_SERVER_ERROR,

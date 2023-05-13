@@ -4,6 +4,7 @@ import { styled, Paper, Typography, Box, Grid, Card, CardActionArea, CardMedia, 
 
 import type { NextPageWithLayout } from './_app';
 import { HomeLayout } from '../feature/layouts';
+import Link from 'next/link';
 
 const SpanStyles = styled('span')(({ theme }) => ({
     color: theme.color.lightMain,
@@ -170,7 +171,7 @@ const About: NextPageWithLayout = () => {
                         </PContentStyles>
                         <PContentStyles>
                             <span style={{ color: 'black' }}>Giấy chứng nhận Đăng ký Kinh doanh:</span>{' '}
-                            <a href="/">Link</a>
+                            <Link href="/">Link</Link>
                         </PContentStyles>
                         <PContentStyles>
                             <span style={{ color: 'black' }}>Thông tin liên hệ:</span> Nguyễn Minh Bảo

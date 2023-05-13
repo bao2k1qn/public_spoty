@@ -136,10 +136,10 @@ function ChildTable(props: { id: any }) {
             <Table size="small" aria-label="purchases">
                 <TableHead>
                     <TableRow>
-                        <TableCellStyle>Name</TableCellStyle>
-                        <TableCellStyle>Size</TableCellStyle>
-                        <TableCellStyle>Quantity</TableCellStyle>
-                        <TableCellStyle>Time - price</TableCellStyle>
+                        <TableCellStyle>Tên</TableCellStyle>
+                        <TableCellStyle>Kích thước</TableCellStyle>
+                        <TableCellStyle>Số lượng</TableCellStyle>
+                        <TableCellStyle>Thời gian và giá</TableCellStyle>
                         <TableCellStyle />
                     </TableRow>
                 </TableHead>
