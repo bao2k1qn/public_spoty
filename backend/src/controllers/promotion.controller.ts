@@ -121,7 +121,7 @@ export const deletePromotion = catchAsync(async (req: Request, res: Response, ne
 });
 
 export const getPromotionsByStd = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    const promotions = await Promotion.find({ stadium: req.query.stdId });
+    const promotions = await Promotion.find({ stadium: req.query.stdId, end_date: { $gt: new Date(Date.now()) } });
     res.status(StatusCodes.OK).json({
         status: 'success',
         data: promotions,

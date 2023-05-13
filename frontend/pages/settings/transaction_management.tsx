@@ -1,18 +1,7 @@
 import * as React from 'react';
 import { ReactElement } from 'react';
 
-import {
-    alpha,
-    Box,
-    IconButton,
-    InputBase,
-    MenuItem,
-    Modal,
-    Paper,
-    SelectChangeEvent,
-    styled,
-    Typography,
-} from '@mui/material';
+import { Box, IconButton, MenuItem, Modal, Paper, SelectChangeEvent, styled, Typography } from '@mui/material';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
@@ -21,7 +10,6 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import SearchIcon from '@mui/icons-material/Search';
 
 import type { NextPageWithLayout } from '../_app';
 import { SettingsLayout } from '../../feature/layouts';
@@ -31,12 +19,18 @@ import stadiumService from '../../services/stadiumService';
 import orderService from '../../services/orderService';
 import moment from 'moment';
 import { OrderDelete, OrderEdit } from '../../feature/orderManagement';
-import PaginationCustom from '../../components/pagination';
-import { TextFieldStyle } from '../../components/textField';
 
-const NUMBER_OF_PAGES = 10;
-
-import { TypographyHeading2Style } from '../../components/typographyHeading';
+const TypographyHeading2Style = styled(Typography)(({ theme, color }) => ({
+    margin: '20px auto',
+    fontFamily: theme.typography.fontFamily,
+    fontStyle: 'normal',
+    fontWeight: theme.typography.h3.fontWeight,
+    fontSize: 25,
+    letterSpacing: '0.04em',
+    color: theme.color.main,
+    textShadow: '0px 2px 4px rgba(0, 0, 0, 0.25)',
+    textAlign: 'center',
+}));
 
 const BoxFormControlStyle = styled(Box)(({ theme }) => ({
     display: 'flex',
@@ -88,7 +82,6 @@ const TemBox = ({ text, color }: any) => {
 };
 const User: NextPageWithLayout = () => {
     const [orders, setOrders] = React.useState([]);
-    const [count, setCount] = React.useState(0);
     const [stadiums, setStadiums] = React.useState([]);
     const [areas, setAreas] = React.useState([]);
     const [stdCurr, setStdCurr] = React.useState('');
@@ -96,11 +89,6 @@ const User: NextPageWithLayout = () => {
     const [orderCurr, setOrderCurr] = React.useState();
     const [openModal, setOpenModal] = React.useState(false);
     const [modalCurr, setModalCurr] = React.useState('');
-    const [searchText, setSearchText] = React.useState('');
-    const [query, setQuery] = React.useState({
-        page: 1,
-        search: '',
-    });
 
     React.useEffect(() => {
         const getStadiums = async () => {
@@ -127,12 +115,11 @@ const User: NextPageWithLayout = () => {
     React.useEffect(() => {
         if (!areaCurr) return;
         const getOrderByArea = async () => {
-            const res = await orderService.getOrdersByArea(areaCurr, { page: query.page, search: query.search });
+            const res = await orderService.getOrdersByArea(areaCurr);
             setOrders(res.data.orders);
-            setCount(res.data.count);
         };
         getOrderByArea();
-    }, [areaCurr, query.page, query.search]);
+    }, [areaCurr]);
 
     const handleChangeStd = (e: SelectChangeEvent<unknown>) => {
         setStdCurr(e.target.value as string);
@@ -151,53 +138,27 @@ const User: NextPageWithLayout = () => {
         setOrderCurr(order);
     };
 
-    const handleChangeSearch = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        setSearchText(e.target.value);
-    };
-
-    const changePageOrder = (param: any, { page }: any) => {
-        setQuery({ ...query, page });
-    };
-
-    const handleSearchSubmit = () => {
-        setQuery({ ...query, page: 1, search: searchText });
-    };
-
     return (
         <Box sx={{ paddingRight: '20px' }}>
-            <TypographyHeading2Style>Quản lí đơn đặt sân</TypographyHeading2Style>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <BoxFormControlStyle sx={{ width: '500px', margin: '20px' }}>
-                    <SelectField name="Sân chính" value={stdCurr} handleChange={handleChangeStd}>
-                        {stadiums.map((stadium: any) => (
-                            <MenuItem key={stadium._id} value={stadium._id}>
-                                {stadium.name}
-                            </MenuItem>
-                        ))}
-                    </SelectField>
-                    <SelectField name="Sân con" value={areaCurr} handleChange={handleChangeArea}>
-                        {areas.map((area: any) => (
-                            <MenuItem key={area._id} value={area._id}>
-                                {area.name}
-                            </MenuItem>
-                        ))}
-                    </SelectField>
-                </BoxFormControlStyle>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <TextFieldStyle
-                        label="Tìm kiếm"
-                        variant="outlined"
-                        placeholder="Nhập SDT hoặc tên"
-                        value={searchText}
-                        onChange={handleChangeSearch}
-                    />
-                    <IconButton onClick={handleSearchSubmit}>
-                        <SearchIcon />
-                    </IconButton>
-                </Box>
-            </Box>
+            <TypographyHeading2Style>Lịch sử giao dịch</TypographyHeading2Style>
+            <BoxFormControlStyle sx={{ width: '500px', margin: '20px' }}>
+                <SelectField name="Sân chính" value={stdCurr} handleChange={handleChangeStd}>
+                    {stadiums.map((stadium: any) => (
+                        <MenuItem key={stadium._id} value={stadium._id}>
+                            {stadium.name}
+                        </MenuItem>
+                    ))}
+                </SelectField>
+                <SelectField name="Sân con" value={areaCurr} handleChange={handleChangeArea}>
+                    {areas.map((area: any) => (
+                        <MenuItem key={area._id} value={area._id}>
+                            {area.name}
+                        </MenuItem>
+                    ))}
+                </SelectField>
+            </BoxFormControlStyle>
             <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 1400 }} aria-label="customized table" style={{ tableLayout: 'auto' }}>
+                <Table sx={{ minWidth: 1300 }} aria-label="customized table" style={{ tableLayout: 'auto' }}>
                     <TableHead>
                         <TableRow>
                             <StyledTableCell>Tên</StyledTableCell>
@@ -228,7 +189,7 @@ const User: NextPageWithLayout = () => {
                                 <StyledTableCell>{order.user.phone}</StyledTableCell>
                                 <StyledTableCell>
                                     {order.stadium_areas.map((area: any) => (
-                                        <Box key={`${area.stadium_area_ref._id}${Math.random()}`}>
+                                        <Box key={area.stadium_area_ref._id}>
                                             {`${moment(area.start_date).hour()} - ${moment(
                                                 area.end_date,
                                             ).hour()}h, ${moment(area.end_date).format('DD/MM/YYYY')} - ${
@@ -304,7 +265,6 @@ const User: NextPageWithLayout = () => {
                     )}
                 </>
             </Modal>
-            <PaginationCustom count={Math.ceil(count / NUMBER_OF_PAGES)} handleSubmit={changePageOrder} />
         </Box>
     );
 };

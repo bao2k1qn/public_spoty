@@ -10,6 +10,7 @@ import APIFeatures from '../utils/apiFeatures';
 import { AppError } from '../utils/appError';
 import { catchAsync } from '../utils/catchAsync';
 import Promotion from '../models/Promotion.model';
+import User from '../models/User.model';
 
 const OVER_DURATION = 24;
 const NUMBER_OF_HOUR = 24;
@@ -277,18 +278,28 @@ export const updatePaymentSuccessful = catchAsync(async (req: Request, res: Resp
     });
 });
 export const getOrdersByArea = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    const { area_id } = req.query;
+    const { area_id, search } = req.query;
     if (!area_id) return next(new AppError(401, 'area_id is incorrect'));
-    const search_query = Order.find({ 'stadium_areas.stadium_area_ref': area_id }).populate(
-        'stadium_areas.stadium_area_ref user',
-    );
+    const search_query = Order.find({ 'stadium_areas.stadium_area_ref': area_id });
+    if (search) {
+        const users = await User.find({
+            $or: [{ name: { $regex: search } }, { phone: { $regex: search } }],
+        });
+        const userIds = users.map((e: any) => e._id);
+        search_query.where('user').in(userIds);
+    }
+    const count = await search_query.clone().count();
 
-    const features = new APIFeatures(search_query, req.query).sort().limitFields().paginate();
+    const features = new APIFeatures(search_query.populate('stadium_areas.stadium_area_ref user'), req.query)
+        .sort()
+        .limitFields()
+        .paginate();
 
     const orders = await features.query;
     res.status(200).json({
         status: 'success',
         orders,
+        count,
     });
 });
 
@@ -341,7 +352,7 @@ export const statTopOrder = catchAsync(async (req: Request, res: Response, next:
     const selectedStds = await Stadium.find()
         .where('_id')
         .in(stds.map((e) => e.stadium))
-        .populate('areas promotions');
+        .populate('quantityOrder promotions');
     const uniqueStds = [...new Map(selectedStds.map((m: any) => [m._id, m])).values()];
     res.status(200).json({
         status: 'success',

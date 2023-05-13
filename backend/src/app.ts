@@ -14,6 +14,8 @@ import orderRoute from './routes/order.route';
 import promotionRoute from './routes/promotion.route';
 import teamRoute from './routes/team.route';
 import invitationRoute from './routes/invitation.route';
+import matchRoute from './routes/match.route';
+import profileRoute from './routes/profile.route';
 import { ErrorHandler } from './controllers/error.controller';
 
 const app: Express = express();
@@ -33,8 +35,6 @@ app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 app.use(mongoSanitize());
 app.use(compression());
 
-console.log('have request');
-
 app.use('/api/auth', authRoute);
 app.use('/api/user', userRoute);
 app.use('/api/stadium', stadiumRoute);
@@ -43,6 +43,8 @@ app.use('/api/order', orderRoute);
 app.use('/api/promotion', promotionRoute);
 app.use('/api/team', teamRoute);
 app.use('/api/invitation', invitationRoute);
+app.use('/api/match', matchRoute);
+app.use('/api/profile', profileRoute);
 app.get('*', (req: Request, res: Response) => {
     res.send('Express + TypeScript Server');
 });

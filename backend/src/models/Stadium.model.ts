@@ -69,17 +69,15 @@ const stadiumSchema = new Schema<IStadium>(
 );
 
 stadiumSchema
-    .virtual('areas', {
+    .virtual('quantityOrder', {
         ref: 'StadiumArea',
         foreignField: 'stadium',
         localField: '_id',
     })
     .get(function (areas) {
-        return areas?.map((area: any) => ({
-            id: area._id,
-            quantityArea: area.quantity,
-            quantityOrders: area.quantityOrder,
-        }));
+        return areas?.reduce((curr: number, area: any) => {
+            return curr + area.quantityOrder;
+        }, 0);
     });
 
 stadiumSchema

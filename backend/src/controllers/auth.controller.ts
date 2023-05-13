@@ -158,7 +158,7 @@ export const reqAuthOTP = catchAsync(async (req: Request, res: Response, next: N
             message: 'OTP sent to your phone!',
         });
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         user.otp = undefined;
         user.otpExpires = undefined;
         await user.save({ validateBeforeSave: false });
@@ -193,7 +193,6 @@ export const validatePhoneNumber = catchAsync(async (req: Request, res: Response
     if (!user) return next(new AppError(400, 'User is not esxit'));
 
     const otp = user.createSendOTP();
-
     await user.save({ validateBeforeSave: false });
 
     try {
@@ -205,7 +204,7 @@ export const validatePhoneNumber = catchAsync(async (req: Request, res: Response
             message: 'Create OTP successfull',
         });
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         user.otp = undefined;
         user.otpExpires = undefined;
         await user.save({ validateBeforeSave: false });

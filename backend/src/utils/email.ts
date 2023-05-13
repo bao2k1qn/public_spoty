@@ -16,8 +16,8 @@ class Email {
             port: 465,
             secure: true,
             auth: {
-                user: process.env.EMAIL || '',
-                pass: process.env.EMAIL_KEY || '',
+                user: 'bao.nguyen2k1qn@gmail.com',
+                pass: 'jjmvxhaofbphznvj',
             },
         });
     }

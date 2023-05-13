@@ -35,7 +35,7 @@ class Http {
     }
     initHttp() {
         const http = axios.create({
-            baseURL: 'http://localhost:3001/api',
+            baseURL: process.env.NEXT_PUBLIC_BACKEND_URL || '',
             headers,
         });
         http.interceptors.request.use(injectToken, (error) => Promise.reject(error));

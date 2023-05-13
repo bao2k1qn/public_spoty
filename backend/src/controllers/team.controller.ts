@@ -137,7 +137,7 @@ export const getTeamsByLeaderId = catchAsync(async (req: Request, res: Response,
 export const leaveTeam = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const { teamId } = req.params;
     const team = await Team.findById(teamId);
-    console.log(team);
+    // console.log(team);
     if (!team) return next(new AppError(501, 'Cannot find team'));
     if (!team.members.includes(res.locals.user._id)) return next(new AppError(501, "You didn't joined the team"));
 
