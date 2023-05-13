@@ -96,7 +96,7 @@ const StadiumCreate = (props: any) => {
 
     useEffect(() => {
         if (resData) {
-            console.log(resData.data.stadium);
+            // console.log(resData.data.stadium);
             dispatch((state: any) => [...state, resData.data.stadium]);
         }
     }, [dispatch, resData]);
@@ -168,18 +168,18 @@ const StadiumCreate = (props: any) => {
             <PaperStyle elevation={10} sx={{ width: { xs: '85%', md: '500px' }, position: 'relative' }}>
                 <TypographyHeading2Style>Tạo sân bóng</TypographyHeading2Style>
                 <TextFieldStyle
-                    label="Name"
+                    label="Tên"
                     name="name"
-                    placeholder="Enter email or phone number"
+                    placeholder="Vui lòng nhập tên"
                     value={newData.name}
                     onChange={handleChange}
                     fullWidth
                     required
                 />
                 <TextFieldStyle
-                    label="Contact"
+                    label="Liên hệ (SDT)"
                     name="contact"
-                    placeholder="Enter contact"
+                    placeholder="Vui lòng nhập liên hệ (Số điện thoại)"
                     variant="outlined"
                     value={newData.contact}
                     onChange={handleChange}
@@ -190,7 +190,7 @@ const StadiumCreate = (props: any) => {
                 <TextFieldStyle
                     label="Số nhà, tên đường"
                     name="address_detail"
-                    placeholder="Enter address_detail"
+                    placeholder="Vui lòng nhập số nhà, tên đường"
                     variant="outlined"
                     value={newData.address_detail}
                     onChange={handleChange}
@@ -223,9 +223,9 @@ const StadiumCreate = (props: any) => {
                 </BoxFormControlStyle>
                 <Box sx={{ display: 'flex' }}>
                     <TextFieldStyle
-                        label="Time open"
+                        label="Thời gian mở cửa (h)"
                         name="time_open"
-                        placeholder="Enter time_open"
+                        placeholder="Thời gian mở cửa"
                         variant="outlined"
                         value={newData.time_open}
                         onChange={handleChange}
@@ -234,9 +234,9 @@ const StadiumCreate = (props: any) => {
                         sx={{ mt: '15px' }}
                     />
                     <TextFieldStyle
-                        label="Time close"
+                        label="Thời gian đóng cửa (h)"
                         name="time_close"
-                        placeholder="Enter time_close"
+                        placeholder="Thời gian đóng cửa"
                         variant="outlined"
                         value={newData.time_close}
                         onChange={handleChange}
@@ -246,9 +246,9 @@ const StadiumCreate = (props: any) => {
                     />
                 </Box>
                 <TextFieldStyle
-                    label="Description"
+                    label="Mô tả"
                     name="description"
-                    placeholder="Enter description"
+                    placeholder="Vui lòng nhập mô tả"
                     variant="outlined"
                     value={newData.description}
                     onChange={handleChange}
@@ -257,9 +257,9 @@ const StadiumCreate = (props: any) => {
                     sx={{ mt: '15px' }}
                 />
                 <TextFieldStyle
-                    label="Rules"
+                    label="Luật lệ"
                     name="rules"
-                    placeholder="Enter rules"
+                    placeholder="Vui lòng nhập luật lệ"
                     variant="outlined"
                     value={newData.rules}
                     onChange={handleChange}
@@ -268,12 +268,12 @@ const StadiumCreate = (props: any) => {
                     sx={{ mt: '15px' }}
                 />
                 <Box sx={{ mt: '15px' }}>
-                    <Typography>Main image</Typography>
+                    <Typography>Ảnh chính</Typography>
                     <ImageList cols={3}>
                         {avatarPre && (
                             <ImageListItem>
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                                <img src={avatarPre} alt={'main images'} />
+                                <img src={avatarPre} alt={'Ảnh chính'} />
                             </ImageListItem>
                         )}
 
@@ -284,12 +284,12 @@ const StadiumCreate = (props: any) => {
                     </ImageList>
                 </Box>
                 <Box sx={{ mt: '15px' }}>
-                    <Typography>Secondary images</Typography>
+                    <Typography>Ảnh phụ</Typography>
                     <ImageList cols={3}>
                         {(imagesPre.length !== 0 ? imagesPre : []).map((item: any) => (
                             <ImageListItem key={item}>
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                                <img src={`${item}`} alt={'secondary images'} />
+                                <img src={`${item}`} alt={'Ảnh phụ'} />
                             </ImageListItem>
                         ))}
                         <Button variant="contained" component="label" color="success">

@@ -22,11 +22,9 @@ import {
     Resources,
 } from '@devexpress/dx-react-scheduler-material-ui';
 
-import stadiumService from '../../services/stadiumService';
 import { red, yellow } from '@mui/material/colors';
 import { Box, Typography } from '@mui/material';
 import { StdContext } from '../../pages/stadium';
-import { IArea } from './interfaces';
 import { AreaContext } from './bookStadiumArea';
 import { IItem } from './stepper';
 

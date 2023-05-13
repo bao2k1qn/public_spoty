@@ -1,11 +1,25 @@
 import { useState, useEffect } from 'react';
-import { Avatar, Paper, TableContainer, Table, TableHead, TableRow, TableBody } from '@mui/material';
+import { Avatar, Paper, TableContainer, Table, TableHead, TableRow, TableBody, Box, Button, Chip } from '@mui/material';
 
 import PartTile from '../../components/parttitle';
 import invitationService from '../../services/invitationService';
 import { IInvitation } from './interfaces';
 import { StyledTableCell, StyledTableRow } from './styles';
 // Invitations By Team
+
+const ChipLabel = ({text} : {text : string}) => {
+    switch (text) {
+        case 'Accepted':
+            return <Chip label={'Chấp nhận'} color="primary" />
+        case 'Unaccepted':
+            return <Chip label={'Chưa chấp nhận'} color="default" />
+        case 'Rejected':
+            return <Chip label={'Từ chối'} color="error" />
+        default:
+            break;
+    }
+    return <></>;
+}
 export const TeamInvitation = ({ id }: { id: string }) => {
     const [rows, setRows] = useState<IInvitation[]>([]);
     useEffect(() => {
@@ -43,7 +57,9 @@ export const TeamInvitation = ({ id }: { id: string }) => {
                                     <StyledTableCell>{row.user.name}</StyledTableCell>
                                     <StyledTableCell>{row.user.phone}</StyledTableCell>
                                     <StyledTableCell>{row.user.address}</StyledTableCell>
-                                    <StyledTableCell>{row.status}</StyledTableCell>
+                                    <StyledTableCell>
+                                        <ChipLabel text={row.status}/>
+                                    </StyledTableCell>
                                 </StyledTableRow>
                             ))
                         ) : (

@@ -29,14 +29,14 @@ const AreaDelete = ({ data, handleCloseModal, setDataArea }: any) => {
             </Typography>
             <Typography>
                 <strong>{`Thông tin sân bóng: `}</strong>
-                {`ID(${data._id.slice(-5)}) Name(${data.name})`}
+                {`ID(${data._id.slice(-5)}) Tên(${data.name})`}
             </Typography>
             <Box sx={{ textAlign: 'end', marginTop: '20px' }}>
                 <ButtonWhiteStyle variant="contained" onClick={handleCloseModal}>
-                    Disagree
+                    Hủy bỏ
                 </ButtonWhiteStyle>
                 <ButtonStyle variant="contained" loading={loading} sx={{ marginLeft: '10px' }} onClick={handleDelete}>
-                    Agree
+                    Đồng ý
                 </ButtonStyle>
             </Box>
         </PaperStyle>

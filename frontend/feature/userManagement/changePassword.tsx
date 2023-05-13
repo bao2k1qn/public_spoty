@@ -1,8 +1,10 @@
 import { useState, useContext } from 'react';
+import { Avatar, Box, Modal, TextField, Typography } from '@mui/material';
+
 import { AuthContext } from '../../store';
 import authService from '../../services/authService';
 import AlertCustom from '../../components/alert';
-import { Avatar, Box, Modal, TextField, Typography } from '@mui/material';
+import { ChangeAvatar } from './changeAvatar';
 import { ButtonStyle } from '../../components/button';
 const style = {
     position: 'absolute' as 'absolute',
@@ -45,7 +47,7 @@ const AvatarInfo = () => {
         <>
             {error && <AlertCustom type="error" message={'Đổi mật khẩu không thành công!'} />}
             {success && <AlertCustom type="success" message={'Đổi mật khẩu thành công!'} />}
-            <Avatar sx={{ height: '100px', width: '100px', margin: '20px auto' }} src={state.photo} />
+            <ChangeAvatar data={state.photo} />
             <Typography>Hello {state.name}</Typography>
             <Typography>{state.email}</Typography>
             <ButtonStyle type="submit" variant="contained" onClick={handleOpen}>

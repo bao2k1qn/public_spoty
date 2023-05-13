@@ -1,7 +1,7 @@
 import { StepLabel, Typography, styled } from '@mui/material';
 
 export const TypographySubheadingStyle = styled(Typography)(({ theme }) => ({
-    margin: '20px auto',
+    margin: '0px auto 20px',
     fontFamily: theme.typography.fontFamily,
     fontStyle: 'normal',
     fontWeight: theme.typography.h3.fontWeight,

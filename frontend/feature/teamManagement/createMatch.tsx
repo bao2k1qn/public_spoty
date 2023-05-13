@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import moment from 'moment';
 import { Autocomplete, FormControl, Grid, Modal, TextField } from '@mui/material';
 
@@ -7,22 +7,26 @@ import { ButtonStyle } from '../../components/button';
 import { TypographyHeading2Style } from '../../components/typographyHeading';
 import { PaperContainStyles } from './styles';
 
-export function CreateForm() {
-    // const { resData, error, loading, setParams } = useAxios(teamService.createMatch);
+import matchService from '../../services/matchService';
+import { useAxios } from '../../hooks';
+import { TeamContext } from './tabs';
+import { ITeam, IMatch } from './interfaces';
+import AlertCustom from '../../components/alert';
+
+export function CreateForm({ handleClose }: { handleClose: any }) {
+    const { state, isAlert } = useContext(TeamContext);
+    const { resData, error, loading, setParams } = useAxios(matchService.createMatch);
     const [data, setData] = React.useState({
-        team: '',
+        team: state[0],
         stadium: '',
+        address: '',
         startDate: moment().format('YYYY-MM-DD HH:00'),
         endDate: moment().add(1, 'hours').format('YYYY-MM-DD HH:00'),
         contact: '',
         type: '',
         description: '',
     });
-    const teamExist = [
-        { _id: 1, name: 'Mancherter United' },
-        { _id: 2, name: 'Mancherter City' },
-        { _id: 3, name: 'Chealse' },
-    ];
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setData({ ...data, [e.target.name]: e.target.value });
     };
@@ -30,11 +34,32 @@ export function CreateForm() {
     const handleDateChange = (value: any, name: any) => {
         setData({ ...data, [name]: value.format('YYYY-MM-DD HH:00') });
     };
+
     const handleSubmit = () => {
-        console.log(data);
+
+        const formData = new FormData();
+        // formData.append('name', data.name);
+        formData.append('stadium', data.stadium);
+        formData.append('address', data.address);
+        formData.append('from', data.startDate.toString());
+        formData.append('to', data.endDate.toString());
+        formData.append('contact', data.contact);
+        formData.append('level', data.type);
+        formData.append('description', data.description);
+        formData.append('myTeam', data.team._id);
+        setParams([formData]);
     };
+
+    useEffect(() => {
+        if (resData) {
+            handleClose();
+            isAlert('Tạo trận đấu thành công!');
+        }
+    }, [resData]);
+
     return (
         <PaperContainStyles elevation={3}>
+            {error ? <AlertCustom type="error" message={error} /> : null}
             <TypographyHeading2Style>Tạo trận đấu</TypographyHeading2Style>
             <FormControl fullWidth>
                 <Autocomplete
@@ -44,7 +69,8 @@ export function CreateForm() {
                         setData({ ...data, team: newValue });
                     }}
                     freeSolo
-                    options={teamExist.map((team) => team.name)}
+                    options={state}
+                    getOptionLabel={(option) => option.name}
                     renderInput={(params) => <TextField {...params} label="Chọn đội" />}
                     sx={{ mb: 2 }}
                 />
@@ -55,6 +81,20 @@ export function CreateForm() {
                     label="Chọn sân"
                     name="stadium"
                     value={data.stadium}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    autoComplete="Your stadium"
+                    onChange={handleChange}
+                    fullWidth
+                    sx={{ mb: 2 }}
+                />
+                <TextField
+                    required
+                    id="address-picker"
+                    label="Địa chỉ"
+                    name="address"
+                    value={data.address}
                     InputLabelProps={{
                         shrink: true,
                     }}
@@ -100,9 +140,8 @@ export function CreateForm() {
                     </Grid>
                     <Grid item md={6} xs={12}>
                         <TextField
-                            required
                             id="type"
-                            label="Đội hình"
+                            label="Đội hình (người/ đội)"
                             name="type"
                             value={data.type}
                             InputLabelProps={{
@@ -116,7 +155,6 @@ export function CreateForm() {
                     </Grid>
                 </Grid>
                 <TextField
-                    required
                     id="description"
                     label="Mô tả"
                     name="description"
@@ -154,7 +192,7 @@ const CreateMatch = () => {
                 aria-describedby="modal-create-match-description"
             >
                 <>
-                    <CreateForm />
+                    <CreateForm handleClose={handleClose} />
                 </>
             </Modal>
         </>

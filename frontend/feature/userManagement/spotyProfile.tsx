@@ -8,12 +8,16 @@ import { TypographyHeading2Style } from '../../components/typographyHeading';
 
 import { GridStyles } from './styles';
 import type { ISportProfile } from './interfaces';
+import profileService from '../../services/profileService';
+import { useAxios } from '../../hooks';
+import AlertCustom from '../../components/alert';
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
 
 const SportProfile = () => {
-    const [error, setError] = useState<string>('');
-    const [success, setSuccess] = useState<boolean>(false);
-    const [loading, setLoading] = useState<boolean>(false);
+    // const [error, setError] = useState<string>('');
+    // const [success, setSuccess] = useState<boolean>(false);
+    // const [loading, setLoading] = useState<boolean>(false);
+    const [alert, setAlert] = useState<boolean>(false);
     const [data, setData] = useState<ISportProfile>({
         power: 0,
         physical: 0,
@@ -37,6 +41,28 @@ const SportProfile = () => {
         ],
     });
 
+    const { resData, error, loading, setParams } = useAxios(profileService.updateProfile);
+
+    useEffect(() => {
+        const getMyProfile = async () => {
+            const res = await profileService.getMyProfile();
+            const profile = res.data.data.profile;
+            if (profile) {
+                setRole(profile.role);
+                setDominantFoot(profile.dominant_foot);
+                setData({
+                    power: profile.power,
+                    physical: profile.physical,
+                    speed: profile.speed,
+                    skillfull: profile.skillfull,
+                    reflex: profile.reflex,
+                    calm: profile.calm,
+                });
+            }
+        };
+        getMyProfile();
+    }, []);
+
     useEffect(() => {
         setDataSportProfile({
             labels: ['Sức mạnh', 'Thể lực', 'Tốc độ', 'Khéo léo', 'Phản xạ', 'Bình tĩnh'],
@@ -52,31 +78,53 @@ const SportProfile = () => {
         });
     }, [data]);
 
+    useEffect(() => {
+        let timer: any;
+        if (alert) {
+            timer = setTimeout(() => {
+                setAlert(false);
+            }, 3000);
+        }
+        return () => clearTimeout(timer);
+    }, [alert]);
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setData({ ...data, [e.target.name]: Number(e.target.value) });
     };
 
-    const handleSubmit = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
+        const formData = new FormData();
+        formData.append('role', role);
+        formData.append('dominant_foot', dominantFoot);
+        formData.append('power', String(data.power));
+        formData.append('physical', String(data.physical));
+        formData.append('reflex', String(data.reflex));
+        formData.append('calm', String(data.calm));
+        formData.append('skillfull', String(data.skillfull));
+        formData.append('speed', String(data.speed));
 
-        setError('');
-        setSuccess(false);
-        setLoading(true);
+        setParams([formData]);
+        setAlert(true);
+        // setError('');
+        // setSuccess(false);
+        // setLoading(true);
 
-        try {
-            // Call API to update password
-            // await updatePassword(currentPassword, newPassword);
-            setSuccess(true);
-        } catch (error) {
-            setError('Password update failed. Please try again.');
-            console.error(error);
-        }
+        // try {
+        //     // Call API to update password
+        //     // await updatePassword(currentPassword, newPassword);
+        //     setSuccess(true);
+        // } catch (error) {
+        //     setError('Password update failed. Please try again.');
+        //     console.error(error);
+        // }
 
-        setLoading(false);
+        // setLoading(false);
     };
 
     return (
         <>
+            {alert && resData ? <AlertCustom type="success" message="Cập nhật Hồ sơ thể thao thành công!" /> : null}
+            {alert && error ? <AlertCustom type="error" message={error} /> : null}
             <TypographyHeading2Style>Hồ sơ thể thao</TypographyHeading2Style>
             <Grid container spacing={2}>
                 <GridStyles item md={5}>
@@ -182,7 +230,12 @@ const SportProfile = () => {
                         </Grid>
                     </Grid>
 
-                    <ButtonStyle variant="contained" fullWidth>
+                    <ButtonStyle
+                        variant="contained"
+                        fullWidth
+                        loading={loading}
+                        onClick={(event) => handleSubmit(event)}
+                    >
                         Thay đổi
                     </ButtonStyle>
                 </Grid>

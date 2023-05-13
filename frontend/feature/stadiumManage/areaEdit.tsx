@@ -73,18 +73,18 @@ const AreaDetail = (props: any) => {
             {error ? <AlertCustom type="error" message={'something went wrong'} /> : null}
             <TypographyHeading2Style>Chỉnh sửa sân con</TypographyHeading2Style>
             <TextFieldStyle
-                label="Name"
+                label="Tên"
                 name="name"
-                placeholder="Enter email or phone number"
+                placeholder="Vui lòng nhập tên"
                 value={newData.name}
                 onChange={handleChange}
                 fullWidth
                 required
             />
             <TextFieldStyle
-                label="Kích thước"
+                label="Kích thước (m)"
                 name="size"
-                placeholder="Enter size"
+                placeholder="Vui lòng nhập kích thước"
                 variant="outlined"
                 value={newData.size}
                 onChange={handleChange}
@@ -93,9 +93,9 @@ const AreaDetail = (props: any) => {
                 sx={{ mt: '15px' }}
             />
             <TextFieldStyle
-                label="Số lương"
+                label="Số lượng"
                 name="quantity"
-                placeholder="Enter quantity"
+                placeholder="Vui lòng nhập số lượng"
                 variant="outlined"
                 value={newData.quantity}
                 onChange={handleChange}
@@ -106,7 +106,7 @@ const AreaDetail = (props: any) => {
             <TextFieldStyle
                 label="Mô tả"
                 name="description"
-                placeholder="Enter description"
+                placeholder="Vui lòng nhập mô tả"
                 variant="outlined"
                 value={newData.description}
                 onChange={handleChange}
@@ -117,7 +117,7 @@ const AreaDetail = (props: any) => {
             <TextFieldStyle
                 label="Loại sân"
                 name="type"
-                placeholder="Enter type"
+                placeholder="Vui lòng nhập loại sân"
                 variant="outlined"
                 value={newData.type}
                 onChange={handleChange}
@@ -126,9 +126,9 @@ const AreaDetail = (props: any) => {
                 sx={{ mt: '15px' }}
             />
             <TextFieldStyle
-                label="Giá mặt định"
+                label="Giá cố định (VND)"
                 name="default_price"
-                placeholder="Enter default_price"
+                placeholder="Vui lòng nhập giá cố định"
                 variant="outlined"
                 value={newData.default_price}
                 onChange={handleChange}
@@ -139,9 +139,9 @@ const AreaDetail = (props: any) => {
             {newData.time_price.map((tp: any, idx: number) => (
                 <Box key={idx} sx={{ display: 'flex' }}>
                     <TextFieldStyle
-                        label="Từ"
+                        label="Từ (h)"
                         name="from"
-                        placeholder="Enter from"
+                        placeholder="Thời gian"
                         variant="outlined"
                         value={tp.from}
                         onChange={(e: any) => handleDynamicChange(idx, e)}
@@ -150,9 +150,9 @@ const AreaDetail = (props: any) => {
                         sx={{ mt: '15px' }}
                     />
                     <TextFieldStyle
-                        label="Đến"
+                        label="Đến (h)"
                         name="to"
-                        placeholder="Enter to"
+                        placeholder="Thời gian"
                         variant="outlined"
                         value={tp.to}
                         onChange={(e: any) => handleDynamicChange(idx, e)}
@@ -161,9 +161,9 @@ const AreaDetail = (props: any) => {
                         sx={{ mt: '15px' }}
                     />
                     <TextFieldStyle
-                        label="Giá"
+                        label="Giá (VND)"
                         name="price"
-                        placeholder="Enter price"
+                        placeholder="Giá"
                         variant="outlined"
                         value={tp.price}
                         onChange={(e: any) => handleDynamicChange(idx, e)}

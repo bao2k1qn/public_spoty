@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Paper } from '@mui/material';
 import moment from 'moment';
 import { ViewState } from '@devexpress/dx-react-scheduler';
 import {
@@ -8,14 +9,12 @@ import {
     AppointmentTooltip,
     DateNavigator,
     Toolbar,
-    AppointmentForm,
 } from '@devexpress/dx-react-scheduler-material-ui';
 
 import orderService from '../../services/orderService';
-import { ButtonStyle } from '../../components/button';
-import { Box, Paper } from '@mui/material';
+import { Content } from './tooltip';
 
-const formatToAppointmentsType = (orders: any, handleShowOrder: Function) => {
+const formatToAppointmentsType = (orders: any) => {
     const appointments = [] as any[];
     orders.forEach((order: any) => {
         const date = moment(order.date, 'DD-MM-YYYY');
@@ -25,14 +24,22 @@ const formatToAppointmentsType = (orders: any, handleShowOrder: Function) => {
                 .clone()
                 .add(Number(sche.hour) + 1, 'hours')
                 .toDate();
-            const ids = sche.have.map((has: any) => has._id);
+            const orders: any[] = [];
+            sche.have.map((has: any) => {
+                const existing = orders.find((order) => order._id === has._id);
+                if (existing) {
+                    existing.count += 1;
+                } else {
+                    has.count = 1;
+                    orders.push(has);
+                }
+            });
             return {
                 startDate,
                 endDate,
-                ids,
+                orders,
                 count: sche.count,
                 title: `Số lượng ${sche.count}`,
-                handleShowOrder,
             };
         });
         appointments.push(...schedules);
@@ -40,55 +47,7 @@ const formatToAppointmentsType = (orders: any, handleShowOrder: Function) => {
     return appointments;
 };
 
-const Content = ({ children, appointmentData, ...restProps }: any) => {
-    return (
-        <AppointmentTooltip.Content {...restProps} appointmentData={appointmentData}>
-            <ButtonStyle
-                variant="contained"
-                fullWidth
-                onClick={() => appointmentData.handleShowOrder(appointmentData.ids)}
-            >
-                Xem danh sách thông tin đặt sân
-            </ButtonStyle>
-        </AppointmentTooltip.Content>
-    );
-};
-
-const BasicLayoutComponent = ({ onFieldChange, appointmentData, ...restProps }: AppointmentForm.BasicLayoutProps) => {
-    const onCustomFieldChange = (nextValue: any) => {
-        onFieldChange({ quantity: nextValue });
-    };
-
-    return (
-        <AppointmentForm.BasicLayout
-            appointmentData={appointmentData}
-            onFieldChange={onFieldChange}
-            {...restProps}
-            textEditorComponent={() => {
-                return null;
-            }}
-            booleanEditorComponent={() => {
-                return null;
-            }}
-            labelComponent={() => {
-                return null;
-            }}
-        >
-            <Box>
-                <AppointmentForm.Label text="Số lượng" type="titleLabel" />
-                <AppointmentForm.TextEditor
-                    type="titleTextEditor"
-                    readOnly={false}
-                    value={appointmentData.quantity}
-                    onValueChange={onCustomFieldChange}
-                    placeholder="Số lượng"
-                />
-            </Box>
-        </AppointmentForm.BasicLayout>
-    );
-};
-
-const UserSchedule = ({ area, handleShowOrder }: any) => {
+const UserSchedule = () => {
     const [statesScheduler, setstatesScheduler] = React.useState({
         data: [] as any[],
         currentDate: new Date(Date.now()),
@@ -96,17 +55,15 @@ const UserSchedule = ({ area, handleShowOrder }: any) => {
 
     React.useEffect(() => {
         const getScheduleDuringWeekbyDate = async () => {
-            const resSchedule = await orderService.scheduleDuringWeekbyDate(
-                area,
+            const resSchedule = await orderService.getScheduleByUser(
                 moment(statesScheduler.currentDate).toISOString(true),
             );
             const orders = resSchedule.data.data as any[];
-            const appointments = formatToAppointmentsType(orders, handleShowOrder);
+            const appointments = formatToAppointmentsType(orders);
             setstatesScheduler((pre: any) => ({ ...pre, data: appointments }));
         };
-        if (area) getScheduleDuringWeekbyDate();
-        else setstatesScheduler((pre: any) => ({ ...pre, data: [] }));
-    }, [area, handleShowOrder, statesScheduler.currentDate]);
+        getScheduleDuringWeekbyDate();
+    }, [statesScheduler.currentDate]);
 
     const currentDateChange = (currentDate: any) => setstatesScheduler({ ...statesScheduler, currentDate });
 
