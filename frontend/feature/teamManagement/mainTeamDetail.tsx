@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@mui/material';
+import { Box, Button, Paper } from '@mui/material';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import PartTile from '../../components/parttitle';
 import { CustomizedTables } from './memberTeam';
@@ -16,7 +16,9 @@ const MainTeamDetail = ({
     setShowElement: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
     return (
-        <>
+        <Paper
+            sx={{ width: '70%', padding: '20px', margin: 'auto', marginTop: '40px', height: '90%', overflow: 'scroll' }}
+        >
             <Button size="large" startIcon={<KeyboardBackspaceIcon />} onClick={() => setShowElement(false)}>
                 Quay lại
             </Button>
@@ -24,7 +26,7 @@ const MainTeamDetail = ({
             <PartTile title={'Danh sách thành viên'} />
             <CustomizedTables id={data._id as string} rows={data.members as IUser[]} />
             <TeamInvitation id={data._id as string} />
-        </>
+        </Paper>
     );
 };
 export { MainTeamDetail };

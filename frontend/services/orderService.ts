@@ -57,6 +57,15 @@ class orderService {
     async getScheduleByUser(date: string) {
         return await http.get<any>(`/order/get_schedule_by_user`, { params: { date: date } });
     }
+    async getOrderByUser(query?: any) {
+        return await http.get<any>(`/order/get_order_by_user`, {
+            params: {
+                sort: query.sort ? query.sort : undefined,
+                page: query.page ? query.page : 1,
+                limit: NUMBER_OF_PAGES,
+            },
+        });
+    }
 }
 
 export default new orderService();

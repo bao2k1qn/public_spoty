@@ -7,6 +7,22 @@ import APIFeatures from '../utils/apiFeatures';
 import { AppError } from '../utils/appError';
 import { catchAsync } from '../utils/catchAsync';
 
+const updateFunds = async (stdId: any) => {
+    const areas = await StadiumArea.find({ stadium: stdId });
+    let min = areas[0].default_price as number,
+        max = areas[0].default_price as number;
+    areas.forEach((area: any) => {
+        const priceList = area.time_price.map((o: any) => o.price);
+        const maxTemp = Math.max(...priceList, area.default_price);
+        const minTemp = Math.min(...priceList, area.default_price);
+        if (maxTemp > max) max = maxTemp;
+        if (minTemp < min) min = minTemp;
+    });
+    await Stadium.findByIdAndUpdate(stdId, {
+        funds: { min, max },
+    });
+};
+
 export const createArea = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const owner_id = res.locals.user._id;
     const stadium = req.params.stadium;
@@ -30,6 +46,9 @@ export const createArea = catchAsync(async (req: Request, res: Response, next: N
         quantity,
         stadium: stadiumOfOwner._id,
     });
+    // update stadium funds
+    await updateFunds(stadiumOfOwner._id);
+    //
     res.status(StatusCodes.CREATED).json({
         status: 'success',
         data: {
@@ -67,6 +86,9 @@ export const updateArea = catchAsync(async (req: Request, res: Response, next: N
             runValidators: true,
         },
     );
+    // update stadium funds
+    await updateFunds(isStadiumOfOwner._id);
+    //
     res.status(StatusCodes.CREATED).json({
         status: 'success',
         data: {
@@ -101,6 +123,10 @@ export const deleteArea = catchAsync(async (req: Request, res: Response, next: N
         },
     );
     if (!resArea) return next(new AppError(StatusCodes.BAD_REQUEST, 'Delete the stadium faily!'));
+
+    // update stadium funds
+    await updateFunds(isStadiumOfOwner._id);
+    //
 
     res.status(StatusCodes.CREATED).json({
         status: 'success',

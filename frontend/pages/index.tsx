@@ -81,10 +81,23 @@ const BoxSearchStyles = styled(Box)(({ theme }) => ({
 
 const TypographySearchStyles = styled(Typography)(({ theme }) => ({
     fontSize: '40px',
-    fontWeight: '600',
-    color: theme.color.textLight,
+    fontWeight: '800',
+    color: theme.color.lightMain,
     marginRight: '40px',
     marginLeft: '10px',
+    textAlign: 'center',
+    [theme.breakpoints.down('md')]: {
+        display: 'none',
+    },
+}));
+
+const TypographyStyle = styled(Typography)(({ theme }) => ({
+    fontSize: '30px',
+    fontWeight: '700',
+    marginRight: '40px',
+    marginLeft: '10px',
+    marginBottom: '10px',
+    color: theme.color.textLight,
     [theme.breakpoints.down('md')]: {
         display: 'none',
     },
@@ -101,6 +114,7 @@ const Home: NextPageWithLayout = ({ provinces }: any) => {
     const [stdData, setStdData] = useState([]);
     const [topStds, setTopStds] = useState([]);
     const [count, setCount] = useState(0);
+    const [flag, setFlag] = useState(false);
 
     const searchData = useRef<SeachType>();
     const searchOption = useRef<SearchOptionType>();
@@ -129,6 +143,7 @@ const Home: NextPageWithLayout = ({ provinces }: any) => {
         const res = await StadiumService.searchStadiums(dataTemp);
         setStdData(res.data.data.stadiums);
         setCount(res.data.data.count);
+        setFlag(true);
     };
 
     return (
@@ -136,54 +151,44 @@ const Home: NextPageWithLayout = ({ provinces }: any) => {
             <PaperContainStyles elevation={10}>
                 <BoxContainStyles className="searchBox">
                     <BoxSearchStyles>
-                        <TypographySearchStyles>FIND</TypographySearchStyles>
-                        <BoxTabsStyles>
-                            <StyleTabs dataTabs={dataTabs} value={value} handleChange={handleChange} />
-                        </BoxTabsStyles>
+                        <TypographySearchStyles>SPOTY</TypographySearchStyles>
                     </BoxSearchStyles>
-                    <BoxTabPanelStyles>
-                        <TabPanel value={value} index={dataTabs[0].id}>
-                            <Searchbar provinces={provinces} handleSubmit={handleSubmit} />
-                        </TabPanel>
-                        <TabPanel value={value} index={dataTabs[1].id}>
-                            Item Two
-                        </TabPanel>
-                        <TabPanel value={value} index={dataTabs[2].id}>
-                            Item Three
-                        </TabPanel>
-                    </BoxTabPanelStyles>
+                    <BoxSearchStyles>
+                        <TypographyStyle>Tìm kiếm sân bóng một cách dễ dàng, nhanh chóng và tiện lợi</TypographyStyle>
+                    </BoxSearchStyles>
+                    <Searchbar provinces={provinces} handleSubmit={handleSubmit} />
                 </BoxContainStyles>
             </PaperContainStyles>
             <Box>
-                <TabPanel value={value} index={dataTabs[0].id}>
-                    <PartTitle title={'Kết quả tìm kiếm'} />
-                    {stdData.length !== 0 ? (
-                        <>
-                            <SortCardBar handleSubmit={handleSubmit} />
-                            <Grid container spacing={2}>
-                                {stdData.map((value, key) => {
-                                    return (
-                                        <Grid item key={key} xs={12} sm={6} md={3}>
-                                            <Card stdData={value} />
-                                        </Grid>
-                                    );
-                                })}
-                            </Grid>
-                            <PaginationCustom count={Math.ceil(count / NUMBER_OF_PAGES)} handleSubmit={handleSubmit} />
-                        </>
-                    ) : null}
+                {flag ? <PartTitle title={'Kết quả tìm kiếm'} /> : null}
+                {stdData.length !== 0 ? (
+                    <>
+                        <SortCardBar handleSubmit={handleSubmit} />
+                        <Grid container spacing={2}>
+                            {stdData.map((value, key) => {
+                                return (
+                                    <Grid item key={key} xs={12} sm={6} md={3}>
+                                        <Card stdData={value} />
+                                    </Grid>
+                                );
+                            })}
+                        </Grid>
+                        <PaginationCustom count={Math.ceil(count / NUMBER_OF_PAGES)} handleSubmit={handleSubmit} />
+                    </>
+                ) : flag ? (
+                    <Box sx={{ textAlign: 'center', color: 'gray' }}>Không tìm thấy kết quả nào</Box>
+                ) : null}
 
-                    <PartTitle title={'Top sân đặt nhiều nhất'} />
-                    <Grid container spacing={2}>
-                        {topStds.map((value, key) => {
-                            return (
-                                <Grid item key={key} xs={12} sm={6} md={3}>
-                                    <Card stdData={value} />
-                                </Grid>
-                            );
-                        })}
-                    </Grid>
-                </TabPanel>
+                <PartTitle title={'Top sân đặt nhiều nhất'} />
+                <Grid container spacing={2}>
+                    {topStds.map((value, key) => {
+                        return (
+                            <Grid item key={key} xs={12} sm={6} md={3}>
+                                <Card stdData={value} />
+                            </Grid>
+                        );
+                    })}
+                </Grid>
             </Box>
         </Container>
     );

@@ -3,6 +3,7 @@ import validator from 'validator';
 import bcrypt from 'bcryptjs';
 
 import { randomOTP } from '../utils/helper';
+import { getUrlByKey } from '../utils/aws_s3';
 
 export interface IUser {
     name: string;
@@ -133,6 +134,10 @@ userSchema.methods.createSendOTP = function () {
     this.otpExpires = Date.now() + 10 * 60 * 1000;
     return otp;
 };
-
+userSchema.post(/^find/, async function (doc, next) {
+    const promotionUrl = await getUrlByKey({ key: doc.photo });
+    doc.photo = promotionUrl.url as string;
+    next();
+});
 const User = model<IUser>('User', userSchema);
 export default User;

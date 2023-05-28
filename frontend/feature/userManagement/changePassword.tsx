@@ -50,7 +50,7 @@ const AvatarInfo = () => {
             <ChangeAvatar data={state.photo} />
             <Typography>Hello {state.name}</Typography>
             <Typography>{state.email}</Typography>
-            <ButtonStyle type="submit" variant="contained" onClick={handleOpen}>
+            <ButtonStyle type="submit" variant="contained" onClick={handleOpen} sx={{ marginTop: '10px' }}>
                 Đổi mật khẩu
             </ButtonStyle>
             <Modal

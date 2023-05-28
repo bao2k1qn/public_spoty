@@ -82,6 +82,7 @@ export const VerifyPayment = ({ state, setVerifyPayment }: IVerify) => {
                     }}
                     sx={{ m: 1 }}
                     onChange={(e) => setOtp(e.target.value)}
+                    focused
                 />
                 <Button variant="contained" sx={{ m: 1 }} onClick={handleOnSubmitPayment}>
                     Xác nhận

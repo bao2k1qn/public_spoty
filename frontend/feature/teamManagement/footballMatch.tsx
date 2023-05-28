@@ -36,7 +36,7 @@ const FootballMatch = () => {
         const getUnassignMatch = async () => {
             const resData = await matchService.getUnassignMatch();
             setUnassignMatches(resData.data.data);
-        }; 
+        };
         getOwnMatch();
         getUnassignMatch();
     }, []);
@@ -59,14 +59,14 @@ const FootballMatch = () => {
                     Chưa có kèo nào được thiết lập.
                 </Typography>
             )}
-            <PartTile title={'Gợi ý'} />
+            {/* <PartTile title={'Gợi ý'} />
             {unassignMatches.length > 0 ? (
                 unassignMatches.map((suggestion) => <AssignMatch key={suggestion._id} data={suggestion} />)
             ) : (
                 <Typography variant="body2" gutterBottom m={2}>
                     Chưa có kèo phù hợp cho bạn.
                 </Typography>
-            )}
+            )} */}
         </>
     );
 };

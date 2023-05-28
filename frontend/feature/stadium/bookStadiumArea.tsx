@@ -1,5 +1,5 @@
 import { SyntheticEvent, createContext, useContext, useMemo, useState } from 'react';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 import Scheduler from './schedule';
 import { StyleTabs, TabPanel } from '../../components/tabs';
@@ -7,6 +7,7 @@ import { StdContext } from '../../pages/stadium';
 
 import { IArea } from './interfaces';
 import { ICartItem } from './stepper';
+import { AuthContext } from '../../store/authContext';
 
 export const AreaContext = createContext<{
     state: IArea | undefined;
@@ -16,6 +17,7 @@ export const AreaContext = createContext<{
 
 const IconTabs = ({ addToCart, CartItem }: { addToCart: any; CartItem: ICartItem }) => {
     const { state } = useContext(StdContext);
+    const { state: stateAuth } = useContext(AuthContext);
     const [value, setValue] = useState(0);
 
     const tabsDataType = useMemo(() => {
@@ -38,6 +40,22 @@ const IconTabs = ({ addToCart, CartItem }: { addToCart: any; CartItem: ICartItem
                 state.areas?.map((tabData: IArea, index: number) => {
                     return (
                         <TabPanel key={index} index={index} value={value}>
+                            <Box sx={{ position: 'relative' }}>
+                                <Box
+                                    sx={{
+                                        textAlign: 'end',
+                                        color: 'red',
+                                        fontSize: '14px',
+                                        position: 'absolute',
+                                        top: '20px',
+                                        right: '20px',
+                                    }}
+                                >
+                                    {stateAuth.isLoginIn
+                                        ? '* Nhấn đúp vào ô trắng bất kỳ để đặt sân'
+                                        : '* Bạn cần đăng nhập để đặt sân'}
+                                </Box>
+                            </Box>
                             <AreaContext.Provider value={{ state: tabData }}>
                                 <Scheduler addToCart={addToCart} CartItem={CartItem[tabData.name] || []} />
                             </AreaContext.Provider>

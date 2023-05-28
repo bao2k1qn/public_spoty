@@ -5,6 +5,7 @@ import { Modal, Grid, Box, List } from '@mui/material';
 
 import Stepper from '../feature/stadium/stepper';
 import PriceTable from '../feature/stadium/priceTable';
+import Voucher from '../feature/stadium/voucherTable';
 import StadiumService from '../services/stadiumService';
 import ImageSlider from '../components/imageslider';
 import ListItemCustom from '../components/listItem';
@@ -61,6 +62,9 @@ const Detail: NextPageWithLayout = () => {
     const handleOpenPrice = () => setOpenPrice(true);
     const handleClosePrice = () => setOpenPrice(false);
 
+    const [openVoucher, setOpenVoucher] = useState(false);
+    const handleOpenVoucher = () => setOpenVoucher(true);
+    const handleCloseVoucher = () => setOpenVoucher(false);
     return (
         <Container>
             <PaperContainStyle elevation={5}>
@@ -105,11 +109,11 @@ const Detail: NextPageWithLayout = () => {
                             </Grid>
 
                             <Grid container direction="row" alignItems="center" spacing={5} justifyContent="center">
-                                <Grid item xs="auto">
+                                {/* <Grid item xs="auto">
                                     <FollowButtonStyle disabled variant="contained">
                                         theo dõi
                                     </FollowButtonStyle>
-                                </Grid>
+                                </Grid> */}
                                 <Grid item xs="auto">
                                     <FollowButtonStyle variant="contained" onClick={handleOpenPrice}>
                                         bảng giá
@@ -126,18 +130,28 @@ const Detail: NextPageWithLayout = () => {
                                     </Modal>
                                 </Grid>
                                 <Grid item xs="auto">
-                                    <PromoteButonStyle variant="contained">ưu đãi</PromoteButonStyle>
+                                    <PromoteButonStyle variant="contained" onClick={handleOpenVoucher}>
+                                        ưu đãi
+                                    </PromoteButonStyle>
+                                    <Modal
+                                        open={openVoucher}
+                                        onClose={handleCloseVoucher}
+                                        aria-labelledby="modal-modal-title"
+                                        aria-describedby="modal-modal-description"
+                                    >
+                                        <>
+                                            <Voucher data={stdData} />
+                                        </>
+                                    </Modal>
                                 </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
 
-                {state.isLoginIn && (
-                    <StdContext.Provider value={{ state: { std: stdData, areas: stdAreaData } }}>
-                        <Stepper />
-                    </StdContext.Provider>
-                )}
+                <StdContext.Provider value={{ state: { std: stdData, areas: stdAreaData } }}>
+                    <Stepper />
+                </StdContext.Provider>
             </PaperContainStyle>
         </Container>
     );

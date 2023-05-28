@@ -179,7 +179,7 @@ export const TotalBill = ({ data, CartItem, deleteItem, updateData }: ITotalBill
             <Typography textAlign="center">{`Địa chỉ: ${state.std?.location?.address}, ${state.std?.location?.ward.name}, ${state.std?.location?.district.name}, ${state.std?.location?.province.name} `}</Typography>
             <Container>
                 <Divider sx={{ m: '16px 0' }} />
-                <strong>Các chương trình khuyến mại</strong>
+                <strong>Các chương trình khuyến mãi</strong>
                 <Box sx={{ marginTop: '10px', overflowX: 'scroll', paddingBottom: '10px' }}>
                     <Stack direction="row" spacing={2}>
                         {pros.map((pro: IPro) => (
@@ -217,26 +217,7 @@ export const TotalBill = ({ data, CartItem, deleteItem, updateData }: ITotalBill
                             <Typography>{VND.format(totalPrice)}</Typography>
                         </Grid>
                     </Grid>
-                    <Grid container item>
-                        <Grid item xs={9}>
-                            <Typography>Giảm giá:</Typography>
-                        </Grid>
-                        <Grid item xs={3}>
-                            <Typography textAlign={'right'}>
-                                {discount === 0 ? '' : '-'} {VND.format(discount)}
-                            </Typography>
-                        </Grid>
-                    </Grid>
-                    <Grid container item>
-                        <Grid item xs={9}>
-                            <Typography>Sử dụng điểm tích lũy:</Typography>
-                        </Grid>
-                        <Grid item xs={3}>
-                            <Typography textAlign={'right'}>
-                                {score === 0 ? '' : '-'} {VND.format(score)}
-                            </Typography>
-                        </Grid>
-                    </Grid>
+
                     <Grid container item>
                         <Grid item xs={9}>
                             <Typography>Voucher:</Typography>

@@ -20,6 +20,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { StyledTableRow, StyledTableCell } from './styles';
 import { IUser } from './interfaces';
 import MemberDelete from './memberDelete';
+import Link from 'next/link';
 
 export function CustomizedTables({ id, rows }: { id: string; rows: IUser[] }) {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -76,6 +77,18 @@ export function CustomizedTables({ id, rows }: { id: string; rows: IUser[] }) {
                                     >
                                         <MoreVertIcon />
                                     </IconButton>
+                                    <Menu anchorEl={anchorEl} open={openMenu} onClose={handleCloseMenu}>
+                                        <a href={`/user?id=${row._id}`} target="_blank" rel="noopener noreferrer">
+                                            <MenuItem>
+                                                <InfoIcon color="info" />
+                                                <span>Xem chi tiết</span>
+                                            </MenuItem>{' '}
+                                        </a>
+                                        <MenuItem onClick={() => handleDelete(rowCurr as IUser)}>
+                                            <DeleteIcon color="error" />
+                                            Xóa
+                                        </MenuItem>
+                                    </Menu>
                                 </StyledTableCell>
                             </StyledTableRow>
                         ))
@@ -91,20 +104,6 @@ export function CustomizedTables({ id, rows }: { id: string; rows: IUser[] }) {
                     )}
                 </TableBody>
             </Table>
-            <Menu anchorEl={anchorEl} open={openMenu} onClose={handleCloseMenu}>
-                <MenuItem onClick={() => handleDetail(rowCurr as IUser)}>
-                    <InfoIcon color="info" />
-                    Xem chi tiết
-                </MenuItem>
-                <MenuItem onClick={() => null}>
-                    <EditIcon color="success" />
-                    Chỉnh sửa
-                </MenuItem>
-                <MenuItem onClick={() => handleDelete(rowCurr as IUser)}>
-                    <DeleteIcon color="error" />
-                    Xóa
-                </MenuItem>
-            </Menu>
             <Modal
                 open={openModal}
                 onClose={handleCloseModal}

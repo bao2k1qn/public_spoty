@@ -223,17 +223,7 @@ export const getCheckoutSession = catchAsync(async (req: Request, res: Response,
     const std = await Stadium.find({ _id: order.stadium_areas[0]?.stadium_area_ref.stadium });
 
     const textInfo = order.stadium_areas.reduce((curr: string, data: any, index: number) => {
-        return (
-            curr +
-            `${index + 1}/ ` +
-            'Name:' +
-            data.stadium_area_ref.name +
-            'Từ: ' +
-            data.start_date +
-            'Đến: ' +
-            data.end_date +
-            '  '
-        );
+        return curr + `${index + 1}/ ` + data.stadium_area_ref.name + '  ';
     }, '');
     // 2) Create checkout session
     const session = await stripe.checkout.sessions.create({
@@ -283,7 +273,7 @@ export const getOrdersByArea = catchAsync(async (req: Request, res: Response, ne
     const search_query = Order.find({ 'stadium_areas.stadium_area_ref': area_id });
     if (search) {
         const users = await User.find({
-            $or: [{ name: { $regex: search } }, { phone: { $regex: search } }],
+            $or: [{ name: { $regex: search, $options: 'i' } }, { phone: { $regex: search, $options: 'i' } }],
         });
         const userIds = users.map((e: any) => e._id);
         search_query.where('user').in(userIds);
@@ -379,4 +369,21 @@ export const getScheduleByUser = catchAsync(async (req: Request, res: Response, 
     // Get order by user
     const data = await getInfoBookTime(res.locals.user._id, startWeekDay.toDate(), endWeekDay.toDate(), 'user');
     res.status(StatusCodes.OK).json({ data });
+});
+export const getOrderByUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const search_query = Order.find({ user: res.locals.user._id });
+
+    const count = await search_query.clone().count();
+
+    const features = new APIFeatures(search_query.populate('stadium_areas.stadium_area_ref user'), req.query)
+        .sort()
+        .limitFields()
+        .paginate();
+
+    const orders = await features.query;
+    res.status(200).json({
+        status: 'success',
+        orders,
+        count,
+    });
 });

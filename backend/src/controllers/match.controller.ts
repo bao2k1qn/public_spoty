@@ -42,6 +42,15 @@ export const getAllMatchWithoutAssignTeam = catchAsync(async (req: Request, res:
     });
 });
 
+export const getMatchsByTeamId = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const matchs = await Match.find({ myTeam: req.query.teamId }).populate('myTeam yourTeam teamQueue');
+
+    res.status(StatusCodes.OK).json({
+        status: 'success',
+        data: matchs,
+    });
+});
+
 export const getAllMatchOfOwn = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const myTeams = await Team.find({ team_leader: res.locals.user._id });
     const matchs = await Match.find()
@@ -74,6 +83,7 @@ export const assignTeamQueue = catchAsync(async (req: Request, res: Response, ne
 export const acceptAssignTeam = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const { matchId } = req.params;
     const { acceptTeam } = req.body;
+    console.log(matchId, acceptTeam);
 
     const match = await Match.findById(matchId);
     if (!match) return next(new AppError(401, 'Match is not exsit'));
@@ -84,6 +94,7 @@ export const acceptAssignTeam = catchAsync(async (req: Request, res: Response, n
     const newMatch = await Match.findOneAndUpdate(
         { _id: match._id },
         {
+            accepted: true,
             yourTeam: acceptTeam,
         },
         { new: true },

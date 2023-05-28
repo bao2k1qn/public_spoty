@@ -1,11 +1,11 @@
-import { Avatar, Paper, TableContainer, Table, TableHead, TableRow, TableBody } from '@mui/material';
+import { Avatar, Paper, TableContainer, Table, TableHead, TableRow, TableBody, Box } from '@mui/material';
 import PartTile from '../../components/parttitle';
 import { IUser } from './interfaces';
 import { StyledTableCell, StyledTableRow } from './styles';
 
 export function MemberTable({ rows }: { rows: IUser[] }) {
     return (
-        <>
+        <Paper sx={{ width: '70%', padding: '20px', margin: 'auto', marginTop: '40px' }}>
             <PartTile title={'Danh sách thành viên'} />
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -65,6 +65,6 @@ export function MemberTable({ rows }: { rows: IUser[] }) {
                     </TableBody>
                 </Table>
             </TableContainer>
-        </>
+        </Paper>
     );
 }

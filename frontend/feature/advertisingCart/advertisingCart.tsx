@@ -25,6 +25,7 @@ interface AdvertisingAboutUsType {
     title: string;
     content: string;
     buttonName: string;
+    link: string;
     reverse: boolean;
 }
 
@@ -40,7 +41,7 @@ export const AdvertisingCart = ({ image, title, content }: AdvertisingCartType) 
     );
 };
 
-export const AdvertisingAboutUs = ({ image, title, content, buttonName, reverse }: AdvertisingAboutUsType) => {
+export const AdvertisingAboutUs = ({ image, title, content, buttonName, reverse, link }: AdvertisingAboutUsType) => {
     return (
         <BoxContainAboutUs image={image} reverse={reverse}>
             <Box>
@@ -49,7 +50,9 @@ export const AdvertisingAboutUs = ({ image, title, content, buttonName, reverse 
             </Box>
             <BoxContentAboutUs>{content}</BoxContentAboutUs>
             <Box>
-                <ButtonStyle variant="contained">{buttonName}</ButtonStyle>
+                <ButtonStyle variant="contained" href={link}>
+                    {buttonName}
+                </ButtonStyle>
             </Box>
         </BoxContainAboutUs>
     );

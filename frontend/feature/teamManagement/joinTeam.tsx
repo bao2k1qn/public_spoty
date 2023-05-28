@@ -21,20 +21,6 @@ const JoinTeam = () => {
     }, [query]);
     return (
         <JoinTeamContext.Provider value={{ dispatch: setJoinTeams }}>
-            <TextField
-                id="input-with-icon-textfield"
-                label=""
-                placeholder="Tìm kiếm..."
-                InputProps={{
-                    endAdornment: (
-                        <InputAdornment position="end">
-                            <SearchIcon />
-                        </InputAdornment>
-                    ),
-                }}
-                variant="outlined"
-                onChange={(e: any) => setQuery(e.target.value)}
-            />
             {joinTeams.length > 0 && joinTeams.map((row: ITeam) => <Card key={row._id} data={row} />)}
         </JoinTeamContext.Provider>
     );

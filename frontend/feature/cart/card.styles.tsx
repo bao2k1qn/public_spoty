@@ -7,7 +7,7 @@ export const BoxStyle = styled(Box)(() => ({
 export const CardStyle = styled(Card)(() => ({
     position: 'relative',
     width: '100%',
-    height: '350px',
+    height: '360px',
     minHeight: '330px',
     overflow: 'hidden',
 }));

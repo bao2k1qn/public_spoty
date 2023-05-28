@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import moment from 'moment';
 import { memo } from 'react';
+import { VND } from '../../utils/helper';
 
 const TemBoxStyle = styled('span', {
     shouldForwardProp: (prop) => prop !== 'color',
@@ -67,67 +68,69 @@ const TypographyHeading2Style = styled(Typography)(({ theme, color }) => ({
 
 const OrderInfos = ({ orderInfo }: any) => {
     return (
-        <TableContainer sx={{ padding: '20px', width: '800px', margin: '50px auto' }} component={Paper}>
-            <TypographyHeading2Style>Thông tin đơn đặt</TypographyHeading2Style>
-            <Table sx={{ minWidth: 1400 }} aria-label="customized table" style={{ tableLayout: 'auto' }}>
-                <TableHead>
-                    <TableRow>
-                        <StyledTableCell>Tên</StyledTableCell>
-                        <StyledTableCell>Số điện thoại</StyledTableCell>
-                        <StyledTableCell>Thời gian đặt - Loại sân</StyledTableCell>
-                        <StyledTableCell>Tổng tiền</StyledTableCell>
-                        <StyledTableCell>Trạng thái</StyledTableCell>
-                        <StyledTableCell>PTTT</StyledTableCell>
-                        <StyledTableCell>Ngày tạo</StyledTableCell>
-                        <StyledTableCell>Dịch vụ</StyledTableCell>
-                        <StyledTableCell>CTKM</StyledTableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {orderInfo.map((order: any) => (
-                        <StyledTableRow key={order._id}>
-                            <StyledTableCell component="th" scope="row" sx={{ fontWeight: 650 }}>
-                                {order.user.name}
-                            </StyledTableCell>
-                            <StyledTableCell>{order.user.phone}</StyledTableCell>
-                            <StyledTableCell>
-                                {order.stadium_areas.map((area: any) => (
-                                    <Box key={area.stadium_area_ref._id}>
-                                        {`${moment(area.start_date).hour()} - ${moment(
-                                            area.end_date,
-                                        ).hour()}h, ${moment(area.end_date).format('DD/MM/YYYY')} - ${
-                                            area.stadium_area_ref.name
-                                        }`}
-                                    </Box>
-                                ))}
-                            </StyledTableCell>
-                            <StyledTableCell>{order.total_cost}</StyledTableCell>
-                            <StyledTableCell>
-                                {order.status ? (
-                                    <TemBox text="Đã thanh toán" color="#33e123" />
-                                ) : (
-                                    <TemBox text="Chưa thanh toán" color="#f93f3f" />
-                                )}
-                            </StyledTableCell>
-                            <StyledTableCell>
-                                {order.payment_method ? (
-                                    order.payment_method === 'Cash' ? (
-                                        <TemBox text="Tiền mặt" color="#d2df21" />
+        <Paper sx={{ width: '80%', padding: '20px', margin: 'auto', marginTop: '40px' }}>
+            <TypographyHeading2Style>Thông tin các đơn đặt sân</TypographyHeading2Style>
+            <TableContainer sx={{ padding: '20px', margin: '50px auto' }} component={Paper}>
+                <Table sx={{ minWidth: 1400 }} aria-label="customized table" style={{ tableLayout: 'auto' }}>
+                    <TableHead>
+                        <TableRow>
+                            <StyledTableCell>Tên</StyledTableCell>
+                            <StyledTableCell>Số điện thoại</StyledTableCell>
+                            <StyledTableCell>Thời gian đặt - Loại sân</StyledTableCell>
+                            <StyledTableCell>Tổng tiền</StyledTableCell>
+                            <StyledTableCell>Trạng thái</StyledTableCell>
+                            <StyledTableCell>PTTT</StyledTableCell>
+                            <StyledTableCell>Ngày tạo</StyledTableCell>
+                            <StyledTableCell>CTKM</StyledTableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {orderInfo.map((order: any) => (
+                            <StyledTableRow key={order._id}>
+                                <StyledTableCell component="th" scope="row" sx={{ fontWeight: 650 }}>
+                                    {order.user.name}
+                                </StyledTableCell>
+                                <StyledTableCell>{order.user.phone}</StyledTableCell>
+                                <StyledTableCell>
+                                    {order.stadium_areas.map((area: any) => (
+                                        <Box key={area.stadium_area_ref._id}>
+                                            {`${moment(area.start_date).hour()} - ${moment(
+                                                area.end_date,
+                                            ).hour()}h, ${moment(area.end_date).format('DD/MM/YYYY')} - ${
+                                                area.stadium_area_ref.name
+                                            }`}
+                                        </Box>
+                                    ))}
+                                </StyledTableCell>
+                                <StyledTableCell>{VND.format(order.total_cost)}</StyledTableCell>
+                                <StyledTableCell>
+                                    {order.status ? (
+                                        <TemBox text="Đã thanh toán" color="#33e123" />
                                     ) : (
-                                        <TemBox text="Stripe" color="#1b83d9" />
-                                    )
-                                ) : (
-                                    ''
-                                )}
-                            </StyledTableCell>
-                            <StyledTableCell>{moment(order.createAt).format('hh[h]mm, DD/MM/YYYY')}</StyledTableCell>
-                            <StyledTableCell>Trống</StyledTableCell>
-                            <StyledTableCell>Trống</StyledTableCell>
-                        </StyledTableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+                                        <TemBox text="Chưa thanh toán" color="#f93f3f" />
+                                    )}
+                                </StyledTableCell>
+                                <StyledTableCell>
+                                    {order.payment_method ? (
+                                        order.payment_method === 'Cash' ? (
+                                            <TemBox text="Tiền mặt" color="#d2df21" />
+                                        ) : (
+                                            <TemBox text="Stripe" color="#1b83d9" />
+                                        )
+                                    ) : (
+                                        ''
+                                    )}
+                                </StyledTableCell>
+                                <StyledTableCell>
+                                    {moment(order.createAt).format('hh[h]mm, DD/MM/YYYY')}
+                                </StyledTableCell>
+                                <StyledTableCell>Trống</StyledTableCell>
+                            </StyledTableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </Paper>
     );
 };
 

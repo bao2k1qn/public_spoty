@@ -28,6 +28,9 @@ const Header = () => {
                 <Link href="/">
                     <ButtonNavStyle>Trang chủ</ButtonNavStyle>
                 </Link>
+                <Link href="/team">
+                    <ButtonNavStyle>Đội bóng</ButtonNavStyle>
+                </Link>
                 <Link href="/about">
                     <ButtonNavStyle>Giới thiệu</ButtonNavStyle>
                 </Link>

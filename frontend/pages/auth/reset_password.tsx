@@ -65,41 +65,56 @@ const Login: NextPageWithLayout = () => {
             {alert.isShow && alert.component}
             <PaperStyle elevation={10} sx={{ width: { xs: '85%', md: '400px' } }}>
                 <Grid alignItems={'center'}>
-                    <h2>Reset password</h2>
+                    <h2>Đặt lại mật khẩu</h2>
                 </Grid>
                 <TextFieldStyle
                     label="OTP"
                     name="otp"
                     onChange={handleChange}
-                    placeholder="Enter OTP"
+                    placeholder="Vui lòng nhập OTP"
                     variant="outlined"
                     fullWidth
                     required
+                    onKeyDown={(e) => {
+                        if (e.keyCode === 13) {
+                            handleSubmit();
+                        }
+                    }}
                 />
                 <TextFieldStyle
-                    label="Password"
+                    label="Mẩu khẩu mới"
                     name="password"
                     onChange={handleChange}
-                    placeholder="Enter password"
+                    placeholder="Vui lòng nhập mật khẩu mới"
                     type="password"
                     variant="outlined"
                     fullWidth
                     required
                     sx={{ mt: '15px' }}
+                    onKeyDown={(e) => {
+                        if (e.keyCode === 13) {
+                            handleSubmit();
+                        }
+                    }}
                 />
                 <TextFieldStyle
-                    label="Password Confirm"
+                    label="Xác nhận mật khẩu"
                     name="passwordConfirm"
                     onChange={handleChange}
-                    placeholder="Enter password confirm"
+                    placeholder="Vui lòng nhập lại mật khẩu mới"
                     type="password"
                     variant="outlined"
                     fullWidth
                     required
                     sx={{ mt: '15px' }}
+                    onKeyDown={(e) => {
+                        if (e.keyCode === 13) {
+                            handleSubmit();
+                        }
+                    }}
                 />
                 <ButtonFormStyle type="submit" variant="contained" loading={loading} onClick={handleSubmit} fullWidth>
-                    Submit
+                    Đổi mật khẩu
                 </ButtonFormStyle>
             </PaperStyle>
         </>

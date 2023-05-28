@@ -12,6 +12,7 @@ import { StyledStepLabel, TypographySubheadingStyle } from './styles';
 import { StdContext } from '../../pages/stadium';
 import { IArea } from './interfaces';
 import { OrderReceiver } from './orderReceiver';
+import { AuthContext } from '../../store';
 
 export interface IItem extends AppointmentModel {
     name: string;
@@ -55,6 +56,7 @@ export const OrderContext = createContext<{
 
 const HorizontalLinearStepper = () => {
     const { state } = useContext(StdContext);
+    const { state: stateAuth } = useContext(AuthContext);
 
     const [activeStep, setActiveStep] = useState<number>(0);
     const [cartItems, setCartItems] = useState<ICartItem>({});
@@ -90,7 +92,7 @@ const HorizontalLinearStepper = () => {
 
     return (
         <OrderContext.Provider value={{ state: order, dispatch: setOrder }}>
-            <Box sx={{ width: '100%' }}>
+            <Box sx={{ width: '100%', marginTop: '20px' }}>
                 <Stepper activeStep={activeStep} sx={{ color: (theme) => theme.color.main }}>
                     {steps.map((label: string) => {
                         const stepProps: { completed?: boolean } = {};
@@ -128,25 +130,32 @@ const HorizontalLinearStepper = () => {
                         </Box>
                     </Fragment>
                 ) : (
-                    <Box sx={{ display: 'flex', justifyContent: 'end', mt: '10px' }}>
-                        <Button
-                            color="inherit"
-                            size="large"
-                            disabled={activeStep === 0}
-                            onClick={handleBack}
-                            startIcon={<WestIcon />}
-                        >
-                            Quay lại
-                        </Button>
-                        <Button
-                            size="large"
-                            onClick={handleNext}
-                            endIcon={<EastIcon />}
-                            disabled={initCartItem || activeStep === 1}
-                        >
-                            {activeStep === steps.length - 1 ? 'Hoàn tất' : 'Tiếp theo'}
-                        </Button>
-                    </Box>
+                    <>
+                        <Box sx={{ display: 'flex', justifyContent: 'end', mt: '10px' }}>
+                            <Button
+                                color="inherit"
+                                size="large"
+                                disabled={activeStep === 0}
+                                onClick={handleBack}
+                                startIcon={<WestIcon />}
+                            >
+                                Quay lại
+                            </Button>
+                            <Button
+                                size="large"
+                                onClick={handleNext}
+                                endIcon={<EastIcon />}
+                                disabled={initCartItem || activeStep === 1 || !stateAuth.isLoginIn}
+                            >
+                                {activeStep === steps.length - 1 ? 'Hoàn tất' : 'Tiếp theo'}
+                            </Button>
+                        </Box>
+                        {stateAuth.isLoginIn ? null : (
+                            <Box sx={{ textAlign: 'end', color: 'red', fontSize: '14px' }}>
+                                * Bạn cần đăng nhập để đặt sân
+                            </Box>
+                        )}
+                    </>
                 )}
             </Box>
         </OrderContext.Provider>

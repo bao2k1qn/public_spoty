@@ -140,7 +140,7 @@ export const update_stadium = catchAsync(async (req: Request, res: Response, nex
 export const search_stadium = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const { name, provinceId, districtId, wardId, funds } = req.query;
     const search_query = {} as any;
-    if (name) search_query['name'] = { $regex: name };
+    if (name) search_query['name'] = { $regex: name, $options: 'i' };
     if (wardId) search_query['location.ward.code'] = { $regex: wardId };
     if (districtId) search_query['location.district.code'] = { $regex: districtId };
     if (provinceId) search_query['location.province.code'] = { $regex: provinceId };

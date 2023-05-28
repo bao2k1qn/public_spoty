@@ -34,7 +34,7 @@ const IconTabs = ({ data }: any) => {
             {data.map((tabData: any, index: number) => {
                 return (
                     <TabPanel key={index} value={String(index)}>
-                        <TimePriceTable dataRows={tabData.time_price} />
+                        <TimePriceTable dataRows={tabData.time_price} defaultPrice={tabData.default_price} />
                     </TabPanel>
                 );
             })}
@@ -52,10 +52,10 @@ const style = {
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
+    overflowX: 'scroll',
 };
 
 const PriceTable = ({ data }: { data: any }) => {
-    console.log(data);
     return (
         <div>
             <Box sx={style}>

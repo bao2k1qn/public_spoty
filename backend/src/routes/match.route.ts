@@ -11,5 +11,6 @@ router.get('/get_matchs_without_assign', matchController.getAllMatchWithoutAssig
 router.get('/get_own_matchs', authMiddlewares.protect, matchController.getAllMatchOfOwn);
 router.post('/assign_match_queue', authMiddlewares.protect, matchController.assignTeamQueue);
 router.patch('/accept_assign_team/:matchId', authMiddlewares.protect, matchController.acceptAssignTeam);
+router.get('/get_matchs_by_team_id', matchController.getMatchsByTeamId);
 
 export default router;

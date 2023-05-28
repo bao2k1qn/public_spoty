@@ -20,18 +20,20 @@ export const Card = ({ data }: { data: ITeam }) => {
     };
     const handleDelete = () => {
         setOpenModal(true);
+        setShowDetail(false);
     };
     const handleDetail = () => {
-        setShowDetail(!showDetail);
+        setOpenModal(true);
+        setShowDetail(true);
     };
     return (
         <>
             <PaperStyles elevation={3}>
                 <Grid container spacing={2}>
-                    <Grid item md={4} xs={12} m={'auto'}>
+                    <Grid item md={3} xs={12} m={'auto'}>
                         <Img alt="complex" src={data.avatar || DefaultTeamAvatar.src} />
                     </Grid>
-                    <Grid item md={8} xs={12} container>
+                    <Grid item md={9} xs={12} container>
                         <Grid container direction="column" spacing={2}>
                             <Grid item xs>
                                 <TypographyHeading2Style>{data.name}</TypographyHeading2Style>
@@ -77,7 +79,11 @@ export const Card = ({ data }: { data: ITeam }) => {
                                     aria-describedby="modal-modal-description"
                                 >
                                     <>
-                                        <LeaveTeam handleCloseModal={handleCloseModal} data={data} />
+                                        {showDetail ? (
+                                            <MemberTable rows={data.members as IUser[]} />
+                                        ) : (
+                                            <LeaveTeam handleCloseModal={handleCloseModal} data={data} />
+                                        )}
                                     </>
                                 </Modal>
                             </Grid>
@@ -85,7 +91,6 @@ export const Card = ({ data }: { data: ITeam }) => {
                     </Grid>
                 </Grid>
             </PaperStyles>
-            {showDetail && <MemberTable rows={data.members as IUser[]} />}
         </>
     );
 };
