@@ -17,7 +17,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import InfoIcon from '@mui/icons-material/Info';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Menu, MenuItem, Modal, styled } from '@mui/material';
+import { Menu, MenuItem, Modal, Tooltip, styled } from '@mui/material';
 
 import type { NextPageWithLayout } from '../_app';
 import { SettingsLayout } from '../../feature/layouts';
@@ -53,6 +53,7 @@ export const TableCellStyle = styled(TableCell)({
     textAlign: 'center',
 });
 export const TableCellDataStyle = styled(TableCell)({
+    padding: '5px',
     fontSize: '14px',
     fontWeight: '500',
     textAlign: 'center',
@@ -246,7 +247,13 @@ function Row(props: { rowParent: any }) {
                 <TableCellDataStyle>{row.name}</TableCellDataStyle>
                 <TableCellDataStyle>{row.contact}</TableCellDataStyle>
                 <TableCellDataStyle>{`${row.time_open}h - ${row.time_close}h`}</TableCellDataStyle>
-                <TableCellDataStyle>{`${row.location.address}, ${row.location.ward.name}, ${row.location.district.name}, ${row.location.province.name}`}</TableCellDataStyle>
+                <TableCellDataStyle>
+                    <Tooltip
+                        title={`${row.location.address}, ${row.location.ward.name}, ${row.location.district.name}, ${row.location.province.name}`}
+                    >
+                        <Box>{row.location.address}</Box>
+                    </Tooltip>
+                </TableCellDataStyle>
                 <TableCellDataStyle>
                     <IconButton onClick={handleClickMenu}>
                         <MoreVertIcon />

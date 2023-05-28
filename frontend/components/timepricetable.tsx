@@ -7,7 +7,7 @@ import Paper from '@mui/material/Paper';
 import { StyledTableCell, StyledTableRow } from '../feature/teamManagement/styles';
 import { VND } from '../utils/helper';
 
-export default function BasicTable({ dataRows }: any) {
+export default function BasicTable({ dataRows, defaultPrice }: any) {
     return (
         <TableContainer component={Paper}>
             <Table aria-label="simple table">
@@ -28,6 +28,14 @@ export default function BasicTable({ dataRows }: any) {
                             </StyledTableCell>
                         </StyledTableRow>
                     ))}
+                    <StyledTableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                        <StyledTableCell component="th" scope="row">
+                            Các giờ còn lại
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                            <b>{VND.format(defaultPrice)}</b>
+                        </StyledTableCell>
+                    </StyledTableRow>
                 </TableBody>
             </Table>
         </TableContainer>

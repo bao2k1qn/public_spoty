@@ -25,7 +25,7 @@ export default function ImgMediaCard({ stdData }: { stdData: any }) {
         <CardStyle>
             <CardMedia component="img" alt="green iguana" height="140" image={stdData.avatar} />
             <CardContent>
-                <TypographyStyle gutterBottom variant="h5">
+                <TypographyStyle gutterBottom variant="h5" sx={{ maxHeight: '45px' }}>
                     {stdData.name}
                 </TypographyStyle>
                 <Box>
@@ -64,7 +64,7 @@ export default function ImgMediaCard({ stdData }: { stdData: any }) {
                 </Box>
             </CardContent>
             <CardActions sx={{ position: 'absolute', bottom: '0' }}>
-                <Link href={state.isLoginIn ? `https://zalo.me/${stdData.contact}` : ''}>
+                <Link href={state.isLoginIn ? `https://zalo.me/${stdData.contact}` : ''} target="_blank">
                     <ButtonStyle size="small" variant="contained" disabled={!state.isLoginIn}>
                         Liên hệ zalo
                     </ButtonStyle>

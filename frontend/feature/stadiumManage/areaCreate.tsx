@@ -117,17 +117,6 @@ const AreaCreate = (props: any) => {
                 sx={{ mt: '15px' }}
             />
             <TextFieldStyle
-                label="Loại sân"
-                name="type"
-                placeholder="Vui lòng nhập loại sân"
-                variant="outlined"
-                value={newData.type}
-                onChange={handleChange}
-                fullWidth
-                required
-                sx={{ mt: '15px' }}
-            />
-            <TextFieldStyle
                 label="Giá cố định (VND)"
                 name="default_price"
                 placeholder="Vui lòng nhập giá cố định"

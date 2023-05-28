@@ -17,6 +17,7 @@ export interface IStadiumArea {
     deleteAt: Date;
     stadium: ObjectId;
     find: Function;
+    clone: Function;
 }
 
 const stadiumAreaSchema = new Schema<IStadiumArea>(
@@ -77,23 +78,6 @@ stadiumAreaSchema.pre(/^find/, function (next) {
 stadiumAreaSchema.pre('findOneAndUpdate', function (next) {
     this.set({ updatedAt: new Date(Date.now()) });
 
-    next();
-});
-
-stadiumAreaSchema.post('findOneAndUpdate', async function (doc, next) {
-    const areas = await this.clone().find({ stadium: doc.stadium });
-    let min = areas[0].default_price,
-        max = areas[0].default_price;
-    areas.forEach((area) => {
-        const priceList = area.time_price.map((o: any) => o.price);
-        const maxTemp = Math.max(...priceList, area.default_price);
-        const minTemp = Math.min(...priceList, area.default_price);
-        if (maxTemp > max) max = maxTemp;
-        if (minTemp < min) min = minTemp;
-    });
-    await Stadium.findByIdAndUpdate(doc.stadium, {
-        funds: { min, max },
-    });
     next();
 });
 

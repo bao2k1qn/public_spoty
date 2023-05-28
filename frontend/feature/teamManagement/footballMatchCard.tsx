@@ -1,19 +1,19 @@
 import { useState } from 'react';
-import { Button, Grid, Typography } from '@mui/material';
+import { Box, Button, Grid, Modal, Paper, Typography } from '@mui/material';
 import { TypographyHeading2Style } from '../../components/typographyHeading';
 import { IMatch, ITeam } from './interfaces';
 import { PaperStyles, Img } from './styles';
 import moment from 'moment';
 import LogoTeam from '../../public/logoTeam.jpg';
 import matchService from '../../services/matchService';
+import { ButtonStyle } from '../../components/button';
+import { useAxios } from '../../hooks';
 
 export const Match = ({ data }: { data: IMatch }) => {
     const [show, setShow] = useState(false);
-    const handleSubmit = async () => {
-        const res = await matchService.acceptAssignMatch(data._id, data);
-        if (res.data) {
-        } else {
-        }
+    const { resData, error, loading, setParams } = useAxios(matchService.acceptAssignMatch);
+    const handleSubmit = async (teamId: string) => {
+        setParams([data._id, { acceptTeam: teamId }]);
     };
     return (
         <>
@@ -38,7 +38,7 @@ export const Match = ({ data }: { data: IMatch }) => {
                             </Grid>
                             <Grid item md={5} xs={12}>
                                 <Typography variant="body2" gutterBottom>
-                                    <b> Loại sân:</b> {data.type}
+                                    <b> Loại sân:</b> {data.level} người
                                 </Typography>
                             </Grid>
                         </Grid>
@@ -82,25 +82,46 @@ export const Match = ({ data }: { data: IMatch }) => {
                     )}
                 </Grid>
             </PaperStyles>
-            {show && (
-                <Grid container spacing={2}>
-                    {data.teamQueue.length > 0 ? (
-                        data.teamQueue.map((team: any) => (
-                            <Grid item xs={4} md={2} key={team._id} sx={{ textAlign: 'center' }}>
-                                <Img alt="your_team" src={team.avatar} />
-                                {/* <TypographyHeading2Style sx={{ fontSize: 10 }}>{team.name}</TypographyHeading2Style> */}
-                                <Button variant="text" onClick={handleSubmit}>
-                                    Đồng ý
-                                </Button>
-                            </Grid>
-                        ))
-                    ) : (
-                        <Typography variant="body2" gutterBottom m={2}>
-                            Chưa có đội nào cap kèo.
-                        </Typography>
-                    )}
-                </Grid>
-            )}
+            <Modal
+                open={show}
+                onClose={() => setShow(!show)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Paper
+                    sx={{
+                        width: '70%',
+                        padding: '20px',
+                        margin: 'auto',
+                        marginTop: '40px',
+                        height: '90%',
+                        overflow: 'scroll',
+                    }}
+                >
+                    <Grid container spacing={2}>
+                        {data.teamQueue.length > 0 ? (
+                            data.teamQueue.map((team: any) => (
+                                <Grid item xs={4} md={2} key={team._id} sx={{ textAlign: 'center' }}>
+                                    <Img alt="your_team" src={team.avatar} />
+                                    <Box sx={{ fontSize: 16, fontWeight: 600 }}>{team.name}</Box>
+                                    <ButtonStyle
+                                        variant="contained"
+                                        onClick={() => handleSubmit(team._id)}
+                                        loading={loading}
+                                        disabled={resData}
+                                    >
+                                        {resData ? 'Đã đồng ý' : 'Đồng ý'}
+                                    </ButtonStyle>
+                                </Grid>
+                            ))
+                        ) : (
+                            <Typography variant="body2" gutterBottom m={2}>
+                                Chưa có đội nào cap kèo.
+                            </Typography>
+                        )}
+                    </Grid>
+                </Paper>
+            </Modal>
         </>
     );
 };

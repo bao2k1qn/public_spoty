@@ -8,6 +8,7 @@ import DiscountIcon from '@mui/icons-material/Discount';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import PaidIcon from '@mui/icons-material/Paid';
 
 import authService from '../../services/authService';
 import { AuthContext } from '../../store';
@@ -27,18 +28,6 @@ const ToolMenu = [
         icon: <GroupsIcon color="primary" />,
         name: 'Quản lý đội bóng',
         path: '/settings/team_management',
-    },
-    {
-        id: 2,
-        icon: <CelebrationIcon color="success" />,
-        name: 'Sự kiện',
-        path: '/settings/event_management',
-    },
-    {
-        id: 3,
-        icon: <DiscountIcon color="secondary" />,
-        name: 'Chương trình thành viên',
-        path: '/settings/promotion_management',
     },
     {
         id: 4,
@@ -84,7 +73,7 @@ const ToolMenuOwner = [
 const TransactionMenu: any[] = [
     {
         id: 12,
-        icon: <Cloud fontSize="small" />,
+        icon: <PaidIcon color="error" />,
         name: 'Lịch sử giao dịch',
         path: '/settings/transaction_management',
     },
@@ -92,7 +81,7 @@ const TransactionMenu: any[] = [
 
 const TransactionMenuOwner: any[] = [];
 
-const findCurruntId = (arrRoutes: any[], route: string): Number => {
+const findCurruntId = (arrRoutes: any[], route: string): number => {
     const currRoute = arrRoutes.find((element: any) => element.path === route);
     return currRoute ? currRoute.id : 0;
 };
@@ -145,9 +134,7 @@ const MenuUser = () => {
                                     selected={selectedIndex === item.id}
                                     onClick={(event) => handleListItemClick(event, item.id)}
                                 >
-                                    <ListItemIconStyle>
-                                        {item.icon}
-                                    </ListItemIconStyle>
+                                    <ListItemIconStyle>{item.icon}</ListItemIconStyle>
                                     <ListItemTextStyle>{item.name}</ListItemTextStyle>
                                 </ListItemButton>
                             </Link>

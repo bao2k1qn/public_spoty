@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Tab, Tabs } from '@mui/material';
+import { Box, Modal, Tab, Tabs } from '@mui/material';
 import CoPresentIcon from '@mui/icons-material/CoPresent';
 import GroupsIcon from '@mui/icons-material/Groups';
 import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
@@ -84,6 +84,10 @@ const BasicTabs = () => {
         return () => clearTimeout(timer);
     }, [message]);
 
+    const handleCloseModal = () => {
+        setShowElement(false);
+    };
+
     return (
         <Box sx={{ width: '100%' }}>
             {message && <AlertCustom type="success" message={message} />}
@@ -91,9 +95,9 @@ const BasicTabs = () => {
                 <Banner title={'Quản lý đội bóng'} imageBG={bannerBG} />
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                        <Tab label="Team tham gia" {...a11yProps(0)} icon={<GroupsIcon />} iconPosition="start" />
+                        <Tab label="Team đã tham gia" {...a11yProps(0)} icon={<GroupsIcon />} iconPosition="start" />
                         <Tab
-                            label="Team quản lý"
+                            label="Quản lý team của bạn"
                             {...a11yProps(1)}
                             icon={<CoPresentIcon />}
                             iconPosition="start"
@@ -101,7 +105,12 @@ const BasicTabs = () => {
                                 setShowElement(false);
                             }}
                         />
-                        <Tab label="Lời mời" {...a11yProps(2)} icon={<CampaignIcon />} iconPosition="start" />
+                        <Tab
+                            label="Lời mời tham gia đội"
+                            {...a11yProps(2)}
+                            icon={<CampaignIcon />}
+                            iconPosition="start"
+                        />
                         <Tab label="Kèo" {...a11yProps(3)} icon={<ConnectWithoutContactIcon />} iconPosition="start" />
                     </Tabs>
                 </Box>
@@ -109,8 +118,18 @@ const BasicTabs = () => {
                     <JoinTeam />
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    {!showElement && <MainTeam setShowElement={setShowElement} setDataDetail={setDataDetail} />}
-                    {showElement && <MainTeamDetail data={dataDetail} setShowElement={setShowElement} />}
+                    <MainTeam setShowElement={setShowElement} setDataDetail={setDataDetail} />
+
+                    <Modal
+                        open={showElement}
+                        onClose={handleCloseModal}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                    >
+                        <>
+                            <MainTeamDetail data={dataDetail} setShowElement={setShowElement} />
+                        </>
+                    </Modal>
                 </TabPanel>
                 <TabPanel value={value} index={2}>
                     <Invitation />

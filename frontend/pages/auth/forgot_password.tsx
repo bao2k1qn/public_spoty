@@ -59,19 +59,24 @@ const ForgotPassword: NextPageWithLayout = () => {
             {alert.isShow && alert.component}
             <PaperStyle elevation={10} sx={{ width: { xs: '85%', md: '400px' } }}>
                 <Grid alignItems={'center'}>
-                    <h2>Forgot password</h2>
+                    <h2>Quên mật khẩu</h2>
                 </Grid>
                 <TextFieldStyle
-                    label="Username"
+                    label="Số điện thoại / Email"
                     name="username"
                     onChange={handleChange}
-                    placeholder="Enter email or phone number"
+                    placeholder="Vui lòng nhập số điện thoại hoặc email"
                     variant="outlined"
                     fullWidth
                     required
+                    onKeyDown={(e) => {
+                        if (e.keyCode === 13) {
+                            handleSubmit();
+                        }
+                    }}
                 />
                 <ButtonFormStyle type="submit" variant="contained" loading={loading} onClick={handleSubmit} fullWidth>
-                    Submit
+                    Tiếp theo
                 </ButtonFormStyle>
             </PaperStyle>
         </>

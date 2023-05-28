@@ -16,7 +16,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     const getLayout = Component.getLayout ?? ((page) => page);
     return (
         <ThemeProviderStyles>
-            <AuthContextProvider>{getLayout(<Component {...pageProps} />)}</AuthContextProvider>;
+            <AuthContextProvider>{getLayout(<Component {...pageProps} />)}</AuthContextProvider>
         </ThemeProviderStyles>
     );
 }

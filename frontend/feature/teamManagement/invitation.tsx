@@ -28,7 +28,7 @@ const Invitation = () => {
                     Chưa có lời mời tham gia đội.
                 </Typography>
             )}
-            <PartTile title={'Gợi ý'} />
+            {/* <PartTile title={'Gợi ý'} />
             {suggestions.length > 0 ? (
                 suggestions.map((suggestion) => (
                     <InvitationCard key={suggestion._id} invitation={suggestion} type={'Suggestion'} />
@@ -37,7 +37,7 @@ const Invitation = () => {
                 <Typography variant="body2" gutterBottom m={2}>
                     Chưa có team phù hợp cho bạn.
                 </Typography>
-            )}
+            )} */}
         </>
     );
 };

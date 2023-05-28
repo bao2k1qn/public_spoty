@@ -119,7 +119,7 @@ const InvitePopover = ({ data }: { data: ITeam }) => {
             {error ? <AlertCustom type="error" message={'Gởi lời mời thất bại!'} /> : null}
             {alert ? <AlertCustom type="error" message={alert} /> : null}
             <ButtonStyle aria-describedby={id} variant="contained" sx={{ float: 'right' }} onClick={handleClick}>
-                Mời
+                Mời thành viên mới
             </ButtonStyle>
             <Popover
                 id={id}
@@ -186,10 +186,10 @@ export const Card = ({ data }: { data: ITeam }) => {
     return (
         <PaperStyles elevation={3}>
             <Grid container spacing={2}>
-                <Grid item md={4} xs={12} m={'auto'}>
+                <Grid item md={3} xs={12} m={'auto'}>
                     <Img alt="complex" src={data.avatar || DefaultTeamAvatar.src} />
                 </Grid>
-                <Grid item md={8} xs={12}>
+                <Grid item md={9} xs={12}>
                     <Grid container direction="column" spacing={2}>
                         <Grid item xs={12}>
                             <TypographyHeading2Style>{data.name}</TypographyHeading2Style>

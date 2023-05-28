@@ -20,5 +20,6 @@ router.get('/get_teams_by_member_id', authMiddlewares.protect, teamController.ge
 router.get('/get_teams_by_leader_id', authMiddlewares.protect, teamController.getTeamsByLeaderId);
 router.patch('/leave_team/:teamId', authMiddlewares.protect, teamController.leaveTeam);
 router.patch('/kick_out_member/:teamId', authMiddlewares.protect, teamController.kickedOutOfTheTeam);
+router.get('/get_teams_by_name', teamController.findTeamByName);
 
 export default router;

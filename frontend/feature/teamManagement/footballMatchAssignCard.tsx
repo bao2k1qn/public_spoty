@@ -61,7 +61,7 @@ export const AssignMatch = ({ data }: { data: any }) => {
                             </Grid>
                             <Grid item md={5} xs={12}>
                                 <Typography variant="body2" gutterBottom>
-                                    <b> Loại sân:</b> {data.type}
+                                    <b> Loại sân:</b> {data.level} người
                                 </Typography>
                             </Grid>
                         </Grid>

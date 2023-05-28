@@ -7,6 +7,7 @@ import { AppError } from '../utils/appError';
 import { catchAsync } from '../utils/catchAsync';
 import multer from 'multer';
 import { deleteFilesFromS3, uploadToS3 } from '../utils/aws_s3';
+import APIFeatures from '../utils/apiFeatures';
 
 const storage = multer.memoryStorage();
 
@@ -63,6 +64,37 @@ export const getUserByPhone = catchAsync(async (req: Request, res: Response, nex
     const { phone } = req.params;
     const user = await User.findOne({ phone: phone });
 
+    res.status(StatusCodes.OK).json({
+        status: 'success',
+        data: {
+            user,
+        },
+    });
+});
+
+export const findUsers = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const { name, phone } = req.query;
+    const findQueryArr = [];
+    if (name) findQueryArr.push({ name: { $regex: name, $options: 'i' } });
+    if (phone) findQueryArr.push({ phone: { $regex: phone, $options: 'i' } });
+    const query = User.find({
+        $or: findQueryArr,
+    }).select('name email phone photo address gender dateOfBirth');
+    const count = await query.clone().count();
+    const features = new APIFeatures(query, req.query).sort().limitFields().paginate();
+
+    const users = await features.query;
+    res.status(StatusCodes.OK).json({
+        status: 'success',
+        data: {
+            users,
+            count,
+        },
+    });
+});
+
+export const findUserById = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const user = await User.findById(req.query.id).select('name email phone photo address gender dateOfBirth');
     res.status(StatusCodes.OK).json({
         status: 'success',
         data: {

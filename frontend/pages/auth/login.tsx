@@ -65,37 +65,47 @@ const Login: NextPageWithLayout = () => {
             {alert.isShow && alert.component}
             <PaperStyle elevation={10} sx={{ width: { xs: '85%', md: '400px' } }}>
                 <Grid alignItems={'center'}>
-                    <h2>Sign In</h2>
+                    <h2>ĐĂNG NHẬP</h2>
                 </Grid>
                 <TextFieldStyle
-                    label="Username"
+                    label="Số điện thoại / Email"
                     name="username"
                     onChange={handleChange}
-                    placeholder="Enter email or phone number"
+                    placeholder="Nhập số điện thoại hoặc email"
                     fullWidth
                     required
+                    onKeyDown={(e) => {
+                        if (e.keyCode === 13) {
+                            handleSubmit();
+                        }
+                    }}
                 />
                 <TextFieldStyle
-                    label="Password"
+                    label="Mật khẩu"
                     name="password"
                     onChange={handleChange}
-                    placeholder="Enter password"
+                    placeholder="Nhập mật khẩu"
                     type="password"
                     variant="outlined"
                     fullWidth
                     required
                     sx={{ mt: '15px' }}
+                    onKeyDown={(e) => {
+                        if (e.keyCode === 13) {
+                            handleSubmit();
+                        }
+                    }}
                 />
                 <ButtonFormStyle type="submit" variant="contained" loading={loading} onClick={handleSubmit} fullWidth>
-                    Sign in
+                    Đăng nhập
                 </ButtonFormStyle>
                 <Typography sx={{ fontSize: '14px', color: '#1394DD' }}>
-                    <Link href="/auth/forgot_password">Forgot password ?</Link>
+                    <Link href="/auth/forgot_password">Quên mật khẩu?</Link>
                 </Typography>
                 <Typography sx={{ fontSize: '14px', color: '#1394DD' }}>
                     {' '}
-                    <span style={{ color: 'black' }}>Do you have an account ?</span>
-                    <Link href="/auth/signup">Sign Up</Link>
+                    <span style={{ color: 'black' }}>Bạn chưa có tài khoản? </span>
+                    <Link href="/auth/signup">Đăng ký</Link>
                 </Typography>
             </PaperStyle>
         </>

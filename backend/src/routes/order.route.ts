@@ -38,5 +38,6 @@ router.delete(
     orderController.deleteOrder,
 );
 router.get('/stat_top_order', orderController.statTopOrder);
+router.get('/get_order_by_user', authMiddlewares.protect, orderController.getOrderByUser);
 
 export default router;

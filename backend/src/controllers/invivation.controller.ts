@@ -114,7 +114,9 @@ export const deleteInvitationByTeamLeader = catchAsync(async (req: Request, res:
 });
 
 export const getInvitationByUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    const invitations = await Invitation.find({ user: res.locals.user._id }).populate('team user');
+    const invitations = await Invitation.find({ user: res.locals.user._id, status: 'Unaccepted' }).populate(
+        'team user',
+    );
     res.status(StatusCodes.CREATED).json({
         status: 'success',
         data: {

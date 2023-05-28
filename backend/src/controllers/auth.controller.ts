@@ -91,11 +91,12 @@ export const forgotPassword = catchAsync(async (req: Request, res: Response, nex
             message: 'OTP was sent!',
         });
     } catch (err) {
+        // console.log(err);
         user.otp = undefined;
         user.otpExpires = undefined;
         await user.save({ validateBeforeSave: false });
 
-        return next(new AppError(500, 'There was an error sending the email. Try again later!'));
+        return next(new AppError(500, 'There was an error sending. Try again later!'));
     }
 });
 

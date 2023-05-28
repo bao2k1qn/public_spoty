@@ -31,7 +31,7 @@ export const PaymentMethod = ({ data, updateData, verifyPayment, handleNext }: I
             setEmptyBill(true);
         }
         if (verifyPayment && data.stadium_areas.length > 0) {
-        // if (data.stadium_areas.length > 0) {
+            // if (data.stadium_areas.length > 0) {
             setErrorOTP(false);
             try {
                 const orderRes = await OrderService.createOrder(data as any);
@@ -62,11 +62,20 @@ export const PaymentMethod = ({ data, updateData, verifyPayment, handleNext }: I
                 >
                     <FormControlLabel value="Cash" control={<Radio />} label="Thanh toán trực tiếp" />
                     <FormControlLabel value="Stripe" control={<Radio />} label="Thanh toán bằng thẻ VISA" />
-                    <FormControlLabel value="Paypal" control={<Radio />} label="Thanh toán qua ngân hàng" />
                 </RadioGroup>
-                <Button variant="contained" sx={{ p: '2 auto' }} onClick={handleOnSubmit}>
+                <Button variant="contained" sx={{ p: '2 auto' }} onClick={handleOnSubmit} disabled={!verifyPayment}>
                     Thanh toán
                 </Button>
+                {verifyPayment ? null : (
+                    <Box
+                        sx={{
+                            color: 'red',
+                            fontSize: '14px',
+                        }}
+                    >
+                        * Cần xác thực OTP để thực hiện thao tác này
+                    </Box>
+                )}
             </FormControl>
         </Box>
     );

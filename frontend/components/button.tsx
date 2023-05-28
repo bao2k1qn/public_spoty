@@ -24,6 +24,7 @@ export const IconButtonStyle = styled(IconButton)(({ theme }) => ({
         backgroundColor: theme.color.lightMain,
     },
     [theme.breakpoints.down('md')]: {
+        marginTop: '10px',
         right: '0',
         width: '95%',
         borderRadius: '10px',

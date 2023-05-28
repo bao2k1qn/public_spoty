@@ -1,18 +1,7 @@
 import * as React from 'react';
 import { ReactElement } from 'react';
 
-import {
-    alpha,
-    Box,
-    IconButton,
-    InputBase,
-    MenuItem,
-    Modal,
-    Paper,
-    SelectChangeEvent,
-    styled,
-    Typography,
-} from '@mui/material';
+import { Box, IconButton, MenuItem, Modal, Paper, SelectChangeEvent, styled } from '@mui/material';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
@@ -33,6 +22,7 @@ import moment from 'moment';
 import { OrderDelete, OrderEdit } from '../../feature/orderManagement';
 import PaginationCustom from '../../components/pagination';
 import { TextFieldStyle } from '../../components/textField';
+import { VND } from '../../utils/helper';
 
 const NUMBER_OF_PAGES = 10;
 
@@ -190,6 +180,11 @@ const User: NextPageWithLayout = () => {
                         placeholder="Nhập SDT hoặc tên"
                         value={searchText}
                         onChange={handleChangeSearch}
+                        onKeyDown={(e) => {
+                            if (e.keyCode === 13) {
+                                handleSearchSubmit();
+                            }
+                        }}
                     />
                     <IconButton onClick={handleSearchSubmit}>
                         <SearchIcon />
@@ -207,7 +202,6 @@ const User: NextPageWithLayout = () => {
                             <StyledTableCell>Trạng thái</StyledTableCell>
                             <StyledTableCell>PTTT</StyledTableCell>
                             <StyledTableCell>Ngày tạo</StyledTableCell>
-                            <StyledTableCell>Dịch vụ</StyledTableCell>
                             <StyledTableCell>CTKM</StyledTableCell>
                             <StyledTableCell
                                 sx={{
@@ -237,7 +231,7 @@ const User: NextPageWithLayout = () => {
                                         </Box>
                                     ))}
                                 </StyledTableCell>
-                                <StyledTableCell>{order.total_cost}</StyledTableCell>
+                                <StyledTableCell>{VND.format(order.total_cost)}</StyledTableCell>
                                 <StyledTableCell>
                                     {order.status ? (
                                         <TemBox text="Đã thanh toán" color="#33e123" />
@@ -259,7 +253,6 @@ const User: NextPageWithLayout = () => {
                                 <StyledTableCell>
                                     {moment(order.createAt).format('hh[h]mm, DD/MM/YYYY')}
                                 </StyledTableCell>
-                                <StyledTableCell>Trống</StyledTableCell>
                                 <StyledTableCell>Trống</StyledTableCell>
                                 <StyledTableCell
                                     component="th"

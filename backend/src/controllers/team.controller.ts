@@ -116,7 +116,10 @@ export const deleteTeam = catchAsync(async (req: Request, res: Response, next: N
 });
 
 export const getTeamsByMemberId = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    let teams = await Team.find({ members: res.locals.user._id }).populate(['members', 'team_leader']);
+    let teams = await Team.find({ members: res.locals.user._id, team_leader: { $ne: res.locals.user._id } }).populate([
+        'members',
+        'team_leader',
+    ]);
     res.status(StatusCodes.CREATED).json({
         status: 'success',
         data: {
@@ -170,6 +173,23 @@ export const kickedOutOfTheTeam = catchAsync(async (req: Request, res: Response,
         status: 'success',
         data: {
             team: newTeam,
+        },
+    });
+});
+
+export const findTeamByName = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const { name } = req.query;
+
+    const query = Team.find({ name: { $regex: name, $options: 'i' } });
+    const count = await query.clone().count();
+    const features = new APIFeatures(query.populate('members team_leader'), req.query).sort().limitFields().paginate();
+
+    const teams = await features.query;
+    res.status(StatusCodes.OK).json({
+        status: 'success',
+        data: {
+            teams,
+            count,
         },
     });
 });

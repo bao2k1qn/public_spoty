@@ -68,61 +68,86 @@ const Login: NextPageWithLayout = () => {
             {alert.isShow && alert.component}
             <PaperStyle elevation={10} sx={{ width: { xs: '85%', md: '400px' } }}>
                 <Grid alignItems={'center'}>
-                    <h2>Sign up</h2>
+                    <h2>Đăng ký</h2>
                 </Grid>
                 <TextFieldStyle
-                    label="Name"
+                    label="Họ và tên"
                     name="name"
                     onChange={handleChange}
-                    placeholder="Enter name"
+                    placeholder="Vui lòng nhập họ và tên"
                     variant="outlined"
                     fullWidth
                     required
+                    onKeyDown={(e) => {
+                        if (e.keyCode === 13) {
+                            handleSubmit();
+                        }
+                    }}
                 />
                 <TextFieldStyle
-                    label="Phone"
+                    label="Số điện thoại"
                     name="phone"
                     onChange={handleChange}
-                    placeholder="Enter phone"
+                    placeholder="Vui lòng nhập số điện thoại"
                     variant="outlined"
                     sx={{ mt: '15px' }}
                     fullWidth
                     required
+                    onKeyDown={(e) => {
+                        if (e.keyCode === 13) {
+                            handleSubmit();
+                        }
+                    }}
                 />
                 <TextFieldStyle
                     label="Email"
                     name="email"
                     onChange={handleChange}
-                    placeholder="Enter email"
+                    placeholder="Vui lòng nhập email"
                     variant="outlined"
                     fullWidth
                     required
                     sx={{ mt: '15px' }}
+                    onKeyDown={(e) => {
+                        if (e.keyCode === 13) {
+                            handleSubmit();
+                        }
+                    }}
                 />
                 <TextFieldStyle
-                    label="Password"
+                    label="Mật khẩu"
                     name="password"
                     onChange={handleChange}
-                    placeholder="Enter password (at least eight characters) "
+                    placeholder="Vui lòng nhập mật khẩu (ít nhất 8 kí tự) "
                     type="password"
                     variant="outlined"
                     fullWidth
                     required
                     sx={{ mt: '15px' }}
+                    onKeyDown={(e) => {
+                        if (e.keyCode === 13) {
+                            handleSubmit();
+                        }
+                    }}
                 />
                 <TextFieldStyle
-                    label="Password confirm"
+                    label="Nhập lại mật khẩu"
                     name="passwordConfirm"
                     onChange={handleChange}
-                    placeholder="Enter password confirm"
+                    placeholder="Vui lòng nhập lại mật khẩu"
                     type="password"
                     variant="outlined"
                     fullWidth
                     required
                     sx={{ mt: '15px' }}
+                    onKeyDown={(e) => {
+                        if (e.keyCode === 13) {
+                            handleSubmit();
+                        }
+                    }}
                 />
                 <ButtonFormStyle type="submit" variant="contained" loading={loading} onClick={handleSubmit} fullWidth>
-                    Sign in
+                    Đăng ký
                 </ButtonFormStyle>
             </PaperStyle>
         </>
