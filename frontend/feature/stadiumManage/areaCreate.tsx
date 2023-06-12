@@ -71,7 +71,7 @@ const AreaCreate = (props: any) => {
     };
     return (
         <PaperStyle elevation={10} sx={{ width: { xs: '85%', md: '500px' } }}>
-            {resData ? <AlertCustom type="success" message="Create successfull" /> : null}
+            {resData ? <AlertCustom type="success" message="Tạo mới thành công" /> : null}
             {error ? <AlertCustom type="error" message={'something went wrong'} /> : null}
             <TypographyHeading2Style>Tạo sân con</TypographyHeading2Style>
             <TextFieldStyle

@@ -89,8 +89,8 @@ export const ChangeAvatar = ({ data }: { data: string }) => {
     }, [alert]);
     return (
         <>
-            {message ? <AlertCustom type="success" message="Cập nhập ảnh đại diện thành công!" /> : null}
-            {alert ? <AlertCustom type="error" message="Cập nhập ảnh đại diện thất bại!" /> : null}
+            {message ? <AlertCustom type="success" message="Cập nhật ảnh đại diện thành công!" /> : null}
+            {alert ? <AlertCustom type="error" message="Cập nhật ảnh đại diện thất bại!" /> : null}
 
             <Avatar
                 sx={{ height: '100px', width: '100px', margin: '20px auto', position: 'relative' }}
@@ -116,7 +116,7 @@ export const ChangeAvatar = ({ data }: { data: string }) => {
             >
                 <Box sx={style}>
                     <Typography id="modal-change-avatar-title" variant="h6" component="h2" textAlign={'center'}>
-                        Cập nhập ảnh đại diện
+                        Cập nhật ảnh đại diện
                     </Typography>
                     <Box
                         sx={{
@@ -136,13 +136,13 @@ export const ChangeAvatar = ({ data }: { data: string }) => {
                                 color="success"
                                 startIcon={<CloudUploadIcon />}
                             >
-                                Upload
+                                Tải lên
                                 <input hidden accept="image/*" type="file" onChange={handleAvatarFileSelected} />
                             </Button>
                         </Grid>
                         <Grid item>
                             <ButtonStyle variant="contained" loading={loading} onClick={handleSubmit}>
-                                Cập nhập
+                                Cập nhật
                             </ButtonStyle>
                         </Grid>
                     </Grid>

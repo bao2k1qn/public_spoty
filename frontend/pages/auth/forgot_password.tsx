@@ -62,7 +62,7 @@ const ForgotPassword: NextPageWithLayout = () => {
                     <h2>Quên mật khẩu</h2>
                 </Grid>
                 <TextFieldStyle
-                    label="Số điện thoại / Email"
+                    label="Số điện thoại/ Email"
                     name="username"
                     onChange={handleChange}
                     placeholder="Vui lòng nhập số điện thoại hoặc email"

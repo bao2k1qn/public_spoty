@@ -163,7 +163,7 @@ const StadiumCreate = (props: any) => {
     };
     return (
         <>
-            {resData ? <AlertCustom type="success" message="Create successfull" /> : null}
+            {resData ? <AlertCustom type="success" message="Tạo mới thành công" /> : null}
             {error ? <AlertCustom type="error" message={error} /> : null}
             <PaperStyle elevation={10} sx={{ width: { xs: '85%', md: '500px' }, position: 'relative' }}>
                 <TypographyHeading2Style>Tạo sân bóng</TypographyHeading2Style>
@@ -278,7 +278,7 @@ const StadiumCreate = (props: any) => {
                         )}
 
                         <Button variant="contained" component="label" color="success" startIcon={<CloudUploadIcon />}>
-                            Upload
+                            Tải lên
                             <input hidden accept="image/*" type="file" onChange={handleAvatarFileSelected} />
                         </Button>
                     </ImageList>
@@ -294,7 +294,7 @@ const StadiumCreate = (props: any) => {
                         ))}
                         <Button variant="contained" component="label" color="success">
                             <CloudUploadIcon />
-                            Upload
+                            Tải lên
                             <input hidden accept="image/*" multiple type="file" onChange={handleImagesFileSelected} />
                         </Button>
                     </ImageList>

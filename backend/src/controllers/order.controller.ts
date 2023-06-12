@@ -212,7 +212,7 @@ export const getScheduleDuringWeek = catchAsync(async (req: Request, res: Respon
 export const getOrderByIds = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     let idsStr: string = (req.query.ids as string) || '';
     let ids: string[] = idsStr.split(',');
-    const orders = await Order.find().where('_id').in(ids).populate('user');
+    const orders = await Order.find().where('_id').in(ids).populate('user stadium_areas.stadium_area_ref');
     res.status(StatusCodes.OK).json({ data: orders });
 });
 
@@ -385,5 +385,50 @@ export const getOrderByUser = catchAsync(async (req: Request, res: Response, nex
         status: 'success',
         orders,
         count,
+    });
+});
+
+export const getStatMonthly = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const { std, year } = req.query;
+    const areas = await StadiumArea.find({ stadium: std });
+    const areaIds = areas.map((e) => e._id);
+    const stat = await Order.aggregate([
+        {
+            $match: {
+                createAt: {
+                    $gte: new Date(`${year}-01-01`),
+                    $lte: new Date(`${year}-12-31`),
+                },
+                stadium_areas: {
+                    $elemMatch: {
+                        stadium_area_ref: {
+                            $in: areaIds,
+                        },
+                    },
+                },
+            },
+        },
+        {
+            $group: {
+                _id: { createAt: { $month: '$createAt' }, status: '$status' },
+                sumTotalCost: { $sum: '$total_cost' },
+                count: { $sum: 1 },
+            },
+        },
+        {
+            $addFields: { month: '$_id.createAt', status: '$_id.status' },
+        },
+        {
+            $project: {
+                _id: 0,
+            },
+        },
+        {
+            $sort: { month: 1 },
+        },
+    ]);
+    res.status(200).json({
+        status: 'success',
+        stat,
     });
 });

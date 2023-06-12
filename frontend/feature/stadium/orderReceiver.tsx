@@ -1,10 +1,23 @@
 import { useContext } from 'react';
 import moment from 'moment';
-import { Container, Divider, Paper, Stack, Typography } from '@mui/material';
+import { Chip, Container, Divider, Paper, Stack, Typography } from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
 import { TypographySubheadingStyle } from './styles';
 import { OrderContext } from './stepper';
 import { VND } from '../../utils/helper';
+
+const ChipLabel = ({ text }: { text: string }) => {
+    switch (text) {
+        case 'Cash':
+            return <Chip label={'Tiền mặt'} color="success" />;
+        case 'Stripe':
+            return <Chip label={'Stripe'} color="primary" />;
+        default:
+            break;
+    }
+    return <></>;
+};
+
 export const OrderReceiver = () => {
     const { state } = useContext(OrderContext);
     return (
@@ -28,7 +41,7 @@ export const OrderReceiver = () => {
                     </Stack>
                     <Stack>
                         <b>Phương thức thanh toán</b>
-                        <Typography>{state.payment_method}</Typography>
+                        <ChipLabel text={state.payment_method} />
                     </Stack>
                     <Stack>
                         <b>Tổng tiền</b>

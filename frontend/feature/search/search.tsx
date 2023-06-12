@@ -7,6 +7,7 @@ import { TextFieldStyle } from '../../components/textField';
 import { SelectField } from '../../components/select';
 import { IconButtonStyle } from '../../components/button';
 import { BoxContainStyle, BoxContentStyle, BoxFormControlStyle } from './search.styles';
+import { VND } from '../../utils/helper';
 
 export interface Province {
     name: string;
@@ -103,7 +104,7 @@ const SearchBar = ({ provinces, handleSubmit }: { provinces: Province[]; handleS
                     <SelectField name="Mức giá (VND/h)" value={funds} handleChange={handleChangeFund}>
                         {Funds.map((fund: FundType) => (
                             <MenuItem key={fund.max} value={JSON.stringify(fund)}>
-                                {`${fund.min} - ${fund.max}`}
+                                {`${VND.format(fund.min)} - ${VND.format(fund.max)}`}
                             </MenuItem>
                         ))}
                     </SelectField>

@@ -3,7 +3,7 @@ import { Divider, List, ListItem, ListItemButton } from '@mui/material';
 import Cloud from '@mui/icons-material/Cloud';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import GroupsIcon from '@mui/icons-material/Groups';
-import CelebrationIcon from '@mui/icons-material/Celebration';
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import DiscountIcon from '@mui/icons-material/Discount';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -58,12 +58,18 @@ const ToolMenuOwner = [
     },
     {
         id: 10,
+        icon: <CurrencyExchangeIcon color="warning" />,
+        name: 'Quản lý doanh thu',
+        path: '/owner/revenue_management',
+    },
+    {
+        id: 11,
         icon: <DiscountIcon color="secondary" />,
         name: 'Chương trình khuyến mãi',
         path: '/owner/promotion_management',
     },
     {
-        id: 11,
+        id: 12,
         icon: <ManageAccountsIcon color="primary" />,
         name: 'Quản lý thông tin',
         path: '/owner/info_management',
@@ -72,7 +78,7 @@ const ToolMenuOwner = [
 
 const TransactionMenu: any[] = [
     {
-        id: 12,
+        id: 13,
         icon: <PaidIcon color="error" />,
         name: 'Lịch sử giao dịch',
         path: '/settings/transaction_management',
@@ -143,7 +149,7 @@ const MenuUser = () => {
                     </Fragment>
                 ))}
             </List>
-            <Title>User</Title>
+            <Title>Người dùng</Title>
             <List>
                 <Fragment>
                     <ListItem disablePadding>
@@ -220,7 +226,7 @@ const MenuOwner = () => {
                     </Fragment>
                 ))}
             </List>
-            <Title>User</Title>
+            <Title>Người dùng</Title>
             <List>
                 <Fragment>
                     <ListItem disablePadding>

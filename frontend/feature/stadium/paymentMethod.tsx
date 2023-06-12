@@ -71,6 +71,7 @@ export const PaymentMethod = ({ data, updateData, verifyPayment, handleNext }: I
                         sx={{
                             color: 'red',
                             fontSize: '14px',
+                            margin: '5px',
                         }}
                     >
                         * Cần xác thực OTP để thực hiện thao tác này

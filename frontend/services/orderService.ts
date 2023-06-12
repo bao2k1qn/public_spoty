@@ -66,6 +66,9 @@ class orderService {
             },
         });
     }
+    async getStatMonthly(std: string, year: number){
+        return await http.get<any>(`/order/get_stat_monthly`, { params: {std: std, year: year}});
+    }
 }
 
 export default new orderService();

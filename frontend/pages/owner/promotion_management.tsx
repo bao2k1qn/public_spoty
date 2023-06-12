@@ -11,22 +11,25 @@ import { BoxContainStyles } from '../../feature/promotion/styles';
 export const PromotionConext = createContext<{
     state: any;
     dispatch: React.Dispatch<React.SetStateAction<any>>;
+    updated: React.Dispatch<React.SetStateAction<any>>;
 }>({
     state: {},
     dispatch: () => null,
+    updated: () => null,
 });
 
 const User: NextPageWithLayout = () => {
     const [pros, setPros] = useState([]);
+    const [updated, setUpdated] = useState<boolean>(true);
     useEffect(() => {
         const getPros = async () => {
             const resPros = await promotionService.getPromotionsOfOwn();
             setPros(resPros.data.data);
         };
         getPros();
-    }, []);
+    }, [updated]);
     return (
-        <PromotionConext.Provider value={{ state: pros, dispatch: setPros }}>
+        <PromotionConext.Provider value={{ state: pros, dispatch: setPros, updated: setUpdated }}>
             <BoxContainStyles>
                 <Banner title={''} imageBG={bannerBG} />
                 {pros.map((e: any) => (

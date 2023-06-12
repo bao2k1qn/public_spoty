@@ -207,7 +207,7 @@ const StadiumEdit = (props: any) => {
     };
     return (
         <>
-            {resData ? <AlertCustom type="success" message="Update successfull" /> : null}
+            {resData ? <AlertCustom type="success" message="Cập nhật thành công" /> : null}
             {error ? <AlertCustom type="error" message={'something went wrong'} /> : null}
             <PaperStyle elevation={10} sx={{ width: { xs: '85%', md: '500px' }, position: 'relative' }}>
                 <TypographyHeading2Style>Sửa thông tin sân bóng</TypographyHeading2Style>
@@ -322,7 +322,7 @@ const StadiumEdit = (props: any) => {
                         ) : null}
                         <Button variant="contained" component="label" color="success">
                             <CloudUploadIcon />
-                            Upload
+                            Tải lên
                             <input hidden accept="image/*" type="file" onChange={handleAvatarFileSelected} />
                         </Button>
                     </ImageList>
@@ -338,7 +338,7 @@ const StadiumEdit = (props: any) => {
                         ))}
                         <Button variant="contained" component="label" color="success">
                             <CloudUploadIcon />
-                            Upload
+                            Tải lên
                             <input hidden accept="image/*" multiple type="file" onChange={handleImagesFileSelected} />
                         </Button>
                     </ImageList>

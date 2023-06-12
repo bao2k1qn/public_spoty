@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { useState, useCallback } from 'react';
-import { Modal, Paper, Grid, Typography, styled } from '@mui/material';
+import { Modal, Grid, Typography } from '@mui/material';
 import QueryBuilderIcon from '@mui/icons-material/QueryBuilder';
 import BusinessIcon from '@mui/icons-material/Business';
 import LoyaltyIcon from '@mui/icons-material/Loyalty';
@@ -50,7 +50,7 @@ const DiscountCard = ({ data }: { data: IPromotion }) => {
                                 </Typography>
                                 <Typography variant="body2" gutterBottom>
                                     <LoyaltyIcon />
-                                    <b>Mức giảm giá:</b> {data.percent ? `${Number(data.percent) * 100} (%)` : null}{' '}
+                                    <b>Mức giảm giá:</b> {data.percent ? `${data.percent} (%)` : null}{' '}
                                     {data.money ? `${data.money} (VND)` : null}
                                 </Typography>
                                 {data.quantity ? (

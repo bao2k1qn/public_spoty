@@ -199,7 +199,7 @@ const CreateTeam = ({ handleClose }: { handleClose: any }) => {
                             )}
                         </ImageList>
                         <Button variant="contained" component="label" color="success" startIcon={<CloudUploadIcon />}>
-                            Upload
+                            Tải lên
                             <input hidden accept="image/*" type="file" onChange={handleAvatarFileSelected} />
                         </Button>
                     </Box>

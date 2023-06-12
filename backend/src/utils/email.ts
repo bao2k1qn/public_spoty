@@ -17,7 +17,7 @@ class Email {
             secure: true,
             auth: {
                 user: 'bao.nguyen2k1qn@gmail.com',
-                pass: process.env.EMAIL_PASSWORD || '',
+                pass: 'gfkjxllfykdxvyeo',
             },
         });
     }

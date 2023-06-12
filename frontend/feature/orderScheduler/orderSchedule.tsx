@@ -18,6 +18,7 @@ import { Box, Typography } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
 import { AreaContext } from '../../pages/owner/booking_management';
 import OrderInfos from './orderInfos';
+import { VND } from '../../utils/helper';
 
 const formatToAppointmentsType = (orders: any, handleShowOrder: Function) => {
     const oppointments = [] as any[];
@@ -161,11 +162,13 @@ const BasicLayoutComponent = ({ onFieldChange, appointmentData, ...restProps }: 
                 <Box>
                     <Box>
                         <strong>Thời gian bắt đầu: </strong>
-                        <span>{appointmentData.startDate?.toLocaleString()}</span>
+                        <span>{moment(appointmentData.startDate).format('DD/MM/YYYY hh:mm:ss A')}</span>
+                        {/* <span>{appointmentData.startDate?.toLocaleString()}</span> */}
                     </Box>
                     <Box>
                         <strong>Thời gian kết thúc: </strong>
-                        <span>{appointmentData.endDate?.toLocaleString()}</span>
+                        <span>{moment(appointmentData.endDate).format('DD/MM/YYYY hh:mm:ss A')}</span>
+                        {/* <span>{appointmentData.endDate?.toLocaleString()}</span> */}
                     </Box>
                     <Box>
                         <strong>Thời lượng: </strong>
@@ -181,7 +184,7 @@ const BasicLayoutComponent = ({ onFieldChange, appointmentData, ...restProps }: 
                     <br />
                     <Box>
                         <strong>Thành tiền: </strong>
-                        <span>{appointmentData.total_cost ? appointmentData.total_cost : 0} (VND)</span>
+                        <span>{VND.format(appointmentData.total_cost || 0)}</span>
                     </Box>
                 </Box>
             </Box>

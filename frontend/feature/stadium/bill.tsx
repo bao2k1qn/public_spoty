@@ -99,7 +99,7 @@ export const SingleBill = ({ value, deleteItem }: ISingleBill) => {
                             Thời gian: {value.endDate?.getHours() - value.startDate?.getHours()} giờ
                         </Typography>
                         <Typography color={(theme) => theme.palette.text.secondary}>
-                            Bắt đầu {moment(value.startDate).format('DD-MM-YYYY hh:mm')}
+                            Bắt đầu {moment(value.startDate).format('DD-MM-YYYY hh:mm A')}
                         </Typography>
                     </Grid>
                     <Grid item xs={3}>

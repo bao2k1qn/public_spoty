@@ -48,7 +48,7 @@ const AvatarInfo = () => {
             {error && <AlertCustom type="error" message={'Đổi mật khẩu không thành công!'} />}
             {success && <AlertCustom type="success" message={'Đổi mật khẩu thành công!'} />}
             <ChangeAvatar data={state.photo} />
-            <Typography>Hello {state.name}</Typography>
+            <Typography>Xin chào {state.name}</Typography>
             <Typography>{state.email}</Typography>
             <ButtonStyle type="submit" variant="contained" onClick={handleOpen} sx={{ marginTop: '10px' }}>
                 Đổi mật khẩu

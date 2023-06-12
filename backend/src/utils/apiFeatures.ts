@@ -24,7 +24,7 @@ class APIFeatures {
         if (this.queryString.sort) {
             this.query = this.query.sort(JSON.parse(this.queryString.sort));
         } else {
-            this.query = this.query.sort('-createdAt');
+            this.query = this.query.sort('-createAt');
         }
 
         return this;

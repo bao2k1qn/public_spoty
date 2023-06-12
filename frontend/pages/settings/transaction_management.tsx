@@ -15,6 +15,7 @@ import withAuth from '../../store/withAuth';
 import orderService from '../../services/orderService';
 import moment from 'moment';
 import PaginationCustom from '../../components/pagination';
+import { VND } from '../../utils/helper';
 
 const NUMBER_OF_PAGES = 10;
 
@@ -114,7 +115,7 @@ const User: NextPageWithLayout = () => {
                                         </Box>
                                     ))}
                                 </StyledTableCell>
-                                <StyledTableCell>{order.total_cost}</StyledTableCell>
+                                <StyledTableCell>{VND.format(order.total_cost)}</StyledTableCell>
                                 <StyledTableCell>
                                     {order.status ? (
                                         <TemBox text="Đã thanh toán" color="#33e123" />

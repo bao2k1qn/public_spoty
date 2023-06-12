@@ -45,7 +45,7 @@ const Login: NextPageWithLayout = () => {
             setLoading(false);
             setAlert({
                 isShow: true,
-                component: <AlertCustom type="success" message="Login successfull" />,
+                component: <AlertCustom type="success" message="Đăng nhập thành công" />,
             });
             setTimeout(() => {
                 dispatch({ type: 'SET_USER', payload: { ...res.data.data, isLoginIn: true } });
@@ -68,7 +68,7 @@ const Login: NextPageWithLayout = () => {
                     <h2>ĐĂNG NHẬP</h2>
                 </Grid>
                 <TextFieldStyle
-                    label="Số điện thoại / Email"
+                    label="Số điện thoại/ Email"
                     name="username"
                     onChange={handleChange}
                     placeholder="Nhập số điện thoại hoặc email"

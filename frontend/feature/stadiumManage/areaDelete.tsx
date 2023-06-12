@@ -22,7 +22,7 @@ const AreaDelete = ({ data, handleCloseModal, setDataArea }: any) => {
     }, [data._id, resData, setDataArea]);
     return (
         <PaperStyle elevation={10} sx={{ width: { xs: '85%', md: '500px' } }}>
-            {resData ? <AlertCustom type="success" message="Delete successfull" /> : null}
+            {resData ? <AlertCustom type="success" message="Xóa thành công" /> : null}
             {error ? <AlertCustom type="error" message={'something went wrong'} /> : null}
             <Typography>
                 <strong> {`Bạn có chắc chắn muốn xóa?`}</strong>
