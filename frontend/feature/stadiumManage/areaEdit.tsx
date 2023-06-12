@@ -69,7 +69,7 @@ const AreaDetail = (props: any) => {
     };
     return (
         <PaperStyle elevation={10} sx={{ width: { xs: '85%', md: '500px' } }}>
-            {resData ? <AlertCustom type="success" message="Update successfull" /> : null}
+            {resData ? <AlertCustom type="success" message="Cập nhật thành công" /> : null}
             {error ? <AlertCustom type="error" message={'something went wrong'} /> : null}
             <TypographyHeading2Style>Chỉnh sửa sân con</TypographyHeading2Style>
             <TextFieldStyle

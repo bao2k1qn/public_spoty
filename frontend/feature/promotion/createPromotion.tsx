@@ -125,15 +125,23 @@ const CreatePromotion = () => {
                 <TypographyHeading2Style>Tạo chương trình khách hàng mới</TypographyHeading2Style>
                 <Box sx={{ display: 'flex' }}>
                     <BoxStyles>
-                        <Typography>Image</Typography>
-                        {imagePre && (
-                            <ImageListItem>
-                                {/* eslint-disable-next-line @next/next/no-img-element */}
-                                <img src={imagePre} alt={'main images'} />
-                            </ImageListItem>
-                        )}
+                        <Typography>Hình ảnh</Typography>
+                        <ImageListItem>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <Box
+                                sx={{
+                                    p: 2,
+                                    my: 2,
+                                    border: '2px dashed grey',
+                                    height: '250px',
+                                }}
+                            >
+                                {imagePre && <img src={imagePre} alt={'main images'} height="200px" width="200px" />}
+                            </Box>
+                        </ImageListItem>
+
                         <Button variant="contained" component="label" color="success" startIcon={<CloudUploadIcon />}>
-                            Upload
+                            Tải lên
                             <input hidden accept="image/*" type="file" onChange={handleAvatarFileSelected} />
                         </Button>
                     </BoxStyles>
@@ -148,7 +156,7 @@ const CreatePromotion = () => {
                         <TextFieldStyle
                             label="Name"
                             name="name"
-                            placeholder="Enter email or phone number"
+                            placeholder="Nhập tên chương trình khuyến mãi"
                             value={newData.name}
                             onChange={handleChange}
                             fullWidth
@@ -177,7 +185,7 @@ const CreatePromotion = () => {
                         <TextFieldStyle
                             label="Mô tả"
                             name="description"
-                            placeholder="Enter description"
+                            placeholder="Nhập mô tả"
                             value={newData.description}
                             onChange={handleChange}
                             fullWidth
@@ -197,7 +205,7 @@ const CreatePromotion = () => {
                                 <TextFieldStyle
                                     label="Phần trăm (%)"
                                     name="percent"
-                                    placeholder="Enter percent"
+                                    placeholder="Nhập phần trăm giảm giá"
                                     value={newData.percent}
                                     onChange={handleChange}
                                     fullWidth
@@ -206,7 +214,7 @@ const CreatePromotion = () => {
                                 <TextFieldStyle
                                     label="Số tiền (VND)"
                                     name="money"
-                                    placeholder="Enter money"
+                                    placeholder="Nhập số tiền giảm giá"
                                     value={newData.money}
                                     onChange={handleChange}
                                     fullWidth
@@ -216,7 +224,7 @@ const CreatePromotion = () => {
                                 <TextFieldStyle
                                     label="Số lượng"
                                     name="quantity"
-                                    placeholder="Enter quantity"
+                                    placeholder="Nhập số lượng"
                                     value={newData.quantity}
                                     onChange={handleChange}
                                     fullWidth
@@ -228,7 +236,7 @@ const CreatePromotion = () => {
                                 <TextFieldStyle
                                     label="Phần trăm (%)"
                                     name="percent"
-                                    placeholder="Enter percent"
+                                    placeholder="Nhập phần trăm giảm giá"
                                     value={newData.percent}
                                     onChange={handleChange}
                                     fullWidth
@@ -237,7 +245,7 @@ const CreatePromotion = () => {
                                 <TextFieldStyle
                                     label="Số tiền"
                                     name="money"
-                                    placeholder="Enter money"
+                                    placeholder="Nhập số tiền giảm giá"
                                     value={newData.money}
                                     onChange={handleChange}
                                     fullWidth

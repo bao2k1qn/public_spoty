@@ -68,7 +68,7 @@ const MainTeamUpdate = ({
             });
             handleCloseModal();
             handleCloseMenu();
-            isAlert('Cập nhập đội bóng thành công!');
+            isAlert('Cập nhật đội bóng thành công!');
         }
     }, [dispatch, resData]);
 
@@ -101,7 +101,7 @@ const MainTeamUpdate = ({
     };
     return (
         <>
-            {error ? <AlertCustom type="error" message={'Cập nhập thông tin thất bại!'} /> : null}
+            {error ? <AlertCustom type="error" message={'Cập nhật thông tin thất bại!'} /> : null}
             <PaperContainStyles elevation={3}>
                 <TypographyHeading2Style>Chỉnh sửa thông tin</TypographyHeading2Style>
                 <FormControl fullWidth>
@@ -208,12 +208,12 @@ const MainTeamUpdate = ({
                             </ImageListItem>
                         </ImageList>
                         <Button variant="contained" component="label" color="success" startIcon={<CloudUploadIcon />}>
-                            Upload
+                            Tải lên
                             <input hidden accept="image/*" type="file" onChange={handleAvatarFileSelected} />
                         </Button>
                     </Box>
                     <ButtonStyle variant="contained" loading={loading} onClick={handleSubmit}>
-                        Cập nhập
+                        Cập nhật
                     </ButtonStyle>
                 </FormControl>
             </PaperContainStyles>

@@ -18,6 +18,7 @@ import {
     SellIcon,
     Discount,
 } from './card.styles';
+import { VND } from '../../utils/helper';
 export default function ImgMediaCard({ stdData }: { stdData: any }) {
     const { state } = useContext(AuthContext);
     // console.log(stdData);
@@ -48,7 +49,9 @@ export default function ImgMediaCard({ stdData }: { stdData: any }) {
                             <SellIcon />
                             <Box component="div">
                                 <TypographyContentStyle>
-                                    <strong>{`${stdData.funds.min} - ${stdData.funds.max} (VND/h)`}</strong>
+                                    <strong>{`${VND.format(stdData.funds.min)} - ${VND.format(
+                                        stdData.funds.max,
+                                    )} (VND/h)`}</strong>
                                 </TypographyContentStyle>
                             </Box>
                         </BoxStyle>

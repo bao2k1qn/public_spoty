@@ -68,10 +68,10 @@ export const assignTeamQueue = catchAsync(async (req: Request, res: Response, ne
     const { myTeam, matchId } = req.body;
 
     const team = await Team.findOne({ _id: myTeam, team_leader: res.locals.user._id });
-    if (!team) return next(new AppError(401, 'Team is not exsit'));
+    if (!team) return next(new AppError(401, 'Team is not exist'));
 
     const match = await Match.findById(matchId);
-    if (!match) return next(new AppError(401, 'Match is not exsit'));
+    if (!match) return next(new AppError(401, 'Match is not exist'));
 
     await Match.findOneAndUpdate({ _id: match._id }, { $push: { teamQueue: myTeam } });
     res.status(StatusCodes.OK).json({

@@ -52,7 +52,7 @@ const BoxContainStyles = styled(Box)(({ theme }) => ({
 }));
 
 const PStyles = styled('p')(({ theme }) => ({
-    color: 'black',
+    color: theme.color.textLight,
     width: '30%',
     fontSize: '18px',
     fontWeight: 600,
@@ -119,11 +119,11 @@ const About: NextPageWithLayout = () => {
                 <Grid item sm={12} md={12}>
                     <BoxQAStyles>
                         <TypographyQuestionStyles>
-                            <SpanStyles>Spoty</SpanStyles> có liên quan gì đến bạn ?
+                            <SpanStyles>SPOTY</SpanStyles> có liên quan gì đến bạn ?
                         </TypographyQuestionStyles>
                         <PAnswerStyles>
-                            Spoty sẽ khiến cho việc quản lý ứng dụng đặt sân bóng đá dễ dàng và tiện lợi hơn bao giờ
-                            hết, cùng với đó Spoty sẽ giúp tăng nhu cầu của khách hàng về sân thể thao giúp cho việc
+                            SPOTY sẽ khiến cho việc quản lý ứng dụng đặt sân bóng đá dễ dàng và tiện lợi hơn bao giờ
+                            hết, cùng với đó SPOTY sẽ giúp tăng nhu cầu của khách hàng về sân thể thao giúp cho việc
                             tăng nhu cầu sử dụng, đặt trước và tạo sự thích thú cho khách hàng, khuyến khích khách hàng
                             sử dụng nhiều hơn.
                         </PAnswerStyles>
@@ -153,7 +153,7 @@ const About: NextPageWithLayout = () => {
                 <Grid item sm={12} md={12}>
                     <BoxQAStyles>
                         <TypographyQuestionStyles>
-                            <SpanStyles>Spoty</SpanStyles> liên quan gì đến chủ sân ?
+                            <SpanStyles>SPOTY</SpanStyles> liên quan gì đến chủ sân ?
                         </TypographyQuestionStyles>
                         <PAnswerStyles>
                             Phần mềm quản lý sân bóng của Sporta hỗ trợ chủ sân quản lý lịch đặt sân hiệu quả và chuyên
@@ -194,8 +194,8 @@ const About: NextPageWithLayout = () => {
                     />
                     <AdvertisingAboutUs
                         image={boySpoty}
-                        title="Hợp tác với Spoty"
-                        content="Bạn là chủ sân? Bạn muốn quản lý sân của mình một cách thông minh. Bạn muốn quản lý các dịch vụ tiện ích tại sân. Spoty sẽ giúp bạn cải thiện hiệu suất quản lý, tăng doanh thu của sân bóng"
+                        title="Hợp tác với SPOTY"
+                        content="Bạn là chủ sân? Bạn muốn quản lý sân của mình một cách thông minh. Bạn muốn quản lý các dịch vụ tiện ích tại sân. SPOTY sẽ giúp bạn cải thiện hiệu suất quản lý, tăng doanh thu của sân bóng"
                         buttonName="Đăng kí chủ sân"
                         link="https://zalo.me/0392747972"
                         reverse={true}

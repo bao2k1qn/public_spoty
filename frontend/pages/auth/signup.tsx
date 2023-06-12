@@ -48,7 +48,7 @@ const Login: NextPageWithLayout = () => {
             setLoading(false);
             setAlert({
                 isShow: true,
-                component: <AlertCustom type="success" message="Signup successfull" />,
+                component: <AlertCustom type="success" message="Đăng ký tài khoản thành công" />,
             });
             setTimeout(() => {
                 dispatch({ type: 'SET_USER', payload: { ...res.data.data, isLoginIn: true } });

@@ -131,7 +131,7 @@ const ChangeInformation = () => {
                 fullWidth
                 sx={{ mt: '15px' }}
             >
-                Cập nhập
+                Cập nhật
             </ButtonStyle>
         </>
     );

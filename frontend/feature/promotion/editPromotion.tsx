@@ -35,7 +35,7 @@ const dataTabs = [
 ];
 
 const EditPromotion = ({ data }: { data: IPromotion }) => {
-    const { state, dispatch } = useContext(PromotionConext);
+    const { state, dispatch, updated } = useContext(PromotionConext);
     const { resData, error, loading, setParams } = useAxios(promotionService.updatePromotion);
 
     const [newData, setNewData] = useState<IPromotion>({
@@ -50,7 +50,7 @@ const EditPromotion = ({ data }: { data: IPromotion }) => {
     });
     const [stds, setStds] = useState<IStadium[]>([]);
     const [imageSelectedFile, setImageSelectedFile] = useState<File>();
-    const [imagePre, setImagePre] = useState<string>('');
+    const [imagePre, setImagePre] = useState<string>(data.image || '');
     const [valueTab, setValueTab] = useState<number>(dataTabs[0].id);
 
     useEffect(() => {
@@ -80,6 +80,7 @@ const EditPromotion = ({ data }: { data: IPromotion }) => {
                 pre[promotionIndex] = resData.data.newPromotion;
                 return [...pre];
             });
+            updated((prev: any) => !prev);
         }
     }, [dispatch, resData]);
 
@@ -119,20 +120,35 @@ const EditPromotion = ({ data }: { data: IPromotion }) => {
     };
     return (
         <>
-            {resData ? <AlertCustom type="success" message="Update successfull" /> : null}
+            {resData ? <AlertCustom type="success" message="Cập nhật thành công" /> : null}
             {error ? <AlertCustom type="error" message={'something went wrong'} /> : null}
             <PaperStyle elevation={10}>
                 <TypographyHeading2Style>Sửa chương trình khách hàng</TypographyHeading2Style>
                 <Box sx={{ display: 'flex' }}>
                     <BoxStyles>
-                        <Typography>Image</Typography>
+                        <Typography>Hình ảnh</Typography>
                         <ImageListItem>
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={imagePre ? imagePre : data.image} alt={'main images'} />
+                            <Box
+                                sx={{
+                                    p: 2,
+                                    my: 2,
+                                    border: '2px dashed grey',
+                                    height: '250px',
+                                }}
+                            >
+                                {imagePre && (
+                                    <img
+                                        src={imagePre ? imagePre : data.image}
+                                        alt={'main images'}
+                                        height="200px"
+                                        width="200px"
+                                    />
+                                )}
+                            </Box>
                         </ImageListItem>
                         <Button variant="contained" component="label" color="success">
                             <CloudUploadIcon />
-                            Upload
+                            Tải lên
                             <input hidden accept="image/*" type="file" onChange={handleAvatarFileSelected} />
                         </Button>
                     </BoxStyles>
@@ -147,7 +163,7 @@ const EditPromotion = ({ data }: { data: IPromotion }) => {
                         <TextFieldStyle
                             label="Name"
                             name="name"
-                            placeholder="Enter email or phone number"
+                            placeholder="Nhập tên chương trình promotion"
                             value={newData.name}
                             onChange={handleChange}
                             fullWidth
@@ -176,7 +192,7 @@ const EditPromotion = ({ data }: { data: IPromotion }) => {
                         <TextFieldStyle
                             label="Mô tả"
                             name="description"
-                            placeholder="Enter description"
+                            placeholder="Nhập mô tả"
                             value={newData.description}
                             onChange={handleChange}
                             fullWidth
@@ -196,7 +212,7 @@ const EditPromotion = ({ data }: { data: IPromotion }) => {
                                 <TextFieldStyle
                                     label="Phần trăm (%)"
                                     name="percent"
-                                    placeholder="Enter percent"
+                                    placeholder="Nhập phần trăm giảm giá"
                                     value={newData.percent}
                                     onChange={handleChange}
                                     fullWidth
@@ -205,7 +221,7 @@ const EditPromotion = ({ data }: { data: IPromotion }) => {
                                 <TextFieldStyle
                                     label="Số tiền (VND)"
                                     name="money"
-                                    placeholder="Enter money"
+                                    placeholder="Nhập số tiền giảm giá"
                                     value={newData.money}
                                     onChange={handleChange}
                                     fullWidth
@@ -215,7 +231,7 @@ const EditPromotion = ({ data }: { data: IPromotion }) => {
                                 <TextFieldStyle
                                     label="Số lượng"
                                     name="quantity"
-                                    placeholder="Enter quantity"
+                                    placeholder="Nhập số lượng"
                                     value={newData.quantity}
                                     onChange={handleChange}
                                     fullWidth
@@ -227,7 +243,7 @@ const EditPromotion = ({ data }: { data: IPromotion }) => {
                                 <TextFieldStyle
                                     label="Phần trăm (%)"
                                     name="percent"
-                                    placeholder="Enter percent"
+                                    placeholder="Nhập phần trăm"
                                     value={newData.percent}
                                     onChange={handleChange}
                                     fullWidth
@@ -236,7 +252,7 @@ const EditPromotion = ({ data }: { data: IPromotion }) => {
                                 <TextFieldStyle
                                     label="Số tiền"
                                     name="money"
-                                    placeholder="Enter money"
+                                    placeholder="Nhập số tiền giảm giá"
                                     value={newData.money}
                                     onChange={handleChange}
                                     fullWidth

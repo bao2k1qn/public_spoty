@@ -40,4 +40,11 @@ router.delete(
 router.get('/stat_top_order', orderController.statTopOrder);
 router.get('/get_order_by_user', authMiddlewares.protect, orderController.getOrderByUser);
 
+router.get(
+    '/get_stat_monthly',
+    authMiddlewares.protect,
+    authMiddlewares.restrictTo('own', 'admin'),
+    orderController.getStatMonthly,
+);
+
 export default router;

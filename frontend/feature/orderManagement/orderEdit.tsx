@@ -71,7 +71,7 @@ const OrderEdit = ({ orderCurr, setOrders }: any) => {
     };
     return (
         <>
-            {resData ? <AlertCustom type="success" message="Update successfull" /> : null}
+            {resData ? <AlertCustom type="success" message="Cập nhật thành công" /> : null}
             {error ? <AlertCustom type="error" message={'something went wrong'} /> : null}
             <PaperStyle elevation={10} sx={{ width: { xs: '85%', md: '500px' } }}>
                 <TypographyHeading2Style>Sửa thông tin đặt sân</TypographyHeading2Style>

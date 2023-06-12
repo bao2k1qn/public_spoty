@@ -25,7 +25,7 @@ const DeletePromotion = ({ data, handleCloseModal }: { data: IPromotion; handleC
 
     return (
         <PaperDeleteStyle elevation={10}>
-            {resData ? <AlertCustom type="success" message="Delete successfull" /> : null}
+            {resData ? <AlertCustom type="success" message="Xóa thành công" /> : null}
             {error ? <AlertCustom type="error" message={'something went wrong'} /> : null}
             <Typography>
                 <strong> {`Bạn có chắc chắn muốn xóa?`}</strong>

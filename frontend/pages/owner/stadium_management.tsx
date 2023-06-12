@@ -36,6 +36,7 @@ import {
 } from '../../feature/stadiumManage';
 import { createContext } from 'react';
 import { ButtonStyle } from '../../components/button';
+import { VND } from '../../utils/helper';
 
 const TYPEMODAL = {
     DetailStd: 'DetailStd',
@@ -154,7 +155,7 @@ function ChildTable(props: { id: any }) {
                             <TableCellDataStyle>{row.quantity}</TableCellDataStyle>
                             <TableCellDataStyle sx={{ maxWidth: '100px' }}>
                                 {row.time_price.reduce(function (curr: any, tp: any) {
-                                    return curr + `${tp.from}-${tp.to}h: ${tp.price}đ; `;
+                                    return curr + `${tp.from}-${tp.to}h: ${VND.format(tp.price)}; `;
                                 }, '')}
                             </TableCellDataStyle>
                             <TableCellDataStyle>
@@ -192,7 +193,7 @@ function ChildTable(props: { id: any }) {
     );
 }
 
-function Row(props: { rowParent: any }) {
+function Row(props: { rowParent: any; index: number }) {
     const [row, setRow] = useState(props.rowParent);
     const [open, setOpen] = React.useState(false);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -242,7 +243,7 @@ function Row(props: { rowParent: any }) {
                     </IconButton>
                 </TableCellDataStyle>
                 <TableCellDataStyle component="th" scope="row">
-                    <strong>{row._id.slice(-5)}</strong>
+                    <strong>{props.index}</strong>
                 </TableCellDataStyle>
                 <TableCellDataStyle>{row.name}</TableCellDataStyle>
                 <TableCellDataStyle>{row.contact}</TableCellDataStyle>
@@ -324,7 +325,7 @@ const User: NextPageWithLayout = () => {
                         <TableHead>
                             <TableRow sx={{ backgroundColor: '#dafbe8' }}>
                                 <TableCellStyle />
-                                <TableCellStyle>Mã sân</TableCellStyle>
+                                <TableCellStyle>STT</TableCellStyle>
                                 <TableCellStyle>Tên sân</TableCellStyle>
                                 <TableCellStyle>Liên hệ</TableCellStyle>
                                 <TableCellStyle>Giờ mở - đóng</TableCellStyle>
@@ -333,8 +334,8 @@ const User: NextPageWithLayout = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.map((row: any) => (
-                                <Row key={row._id} rowParent={row} />
+                            {rows.map((row: any, index: number) => (
+                                <Row key={row._id} rowParent={row} index={index + 1} />
                             ))}
                         </TableBody>
                     </Table>

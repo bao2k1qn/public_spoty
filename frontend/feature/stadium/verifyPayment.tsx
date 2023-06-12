@@ -19,7 +19,7 @@ export const VerifyPayment = ({ state, setVerifyPayment }: IVerify) => {
     const handleOnSendOtp = async () => {
         setError(false);
         try {
-            const res = await authService.sendOTPbyPhone();
+            // const res = await authService.sendOTPbyPhone();
             setSendOTP('success');
         } catch (err) {
             setSendOTP('error');
@@ -29,7 +29,7 @@ export const VerifyPayment = ({ state, setVerifyPayment }: IVerify) => {
     const handleOnSubmitPayment = async () => {
         setSendOTP('');
         try {
-            const res = await authService.checkOTP(otp);
+            // const res = await authService.checkOTP(otp);
             setVerifyPayment(true);
             setSuccess(true);
             setError(false);

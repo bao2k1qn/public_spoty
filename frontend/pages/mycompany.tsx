@@ -107,7 +107,7 @@ const About: NextPageWithLayout = () => {
                 <Grid item xs={12} md={12}>
                     <Box sx={{ padding: '20px 0' }}>
                         <TypographyTitleStyles>
-                            Giới thiệu về <SpanStyles>Spoty</SpanStyles>
+                            Giới thiệu về <SpanStyles>SPOTY</SpanStyles>
                         </TypographyTitleStyles>
                         <PContentStyles>
                             Mạng xã hội bóng đá dành cho anh em đầu tiên và lớn tại Việt Nam. Ở đây, anh em có thể dễ
@@ -165,7 +165,7 @@ const About: NextPageWithLayout = () => {
                     <Box>
                         <PContentStyles>
                             <span style={{ color: 'black' }}>
-                                <SpanStyles>Công ty TNHH Spoty</SpanStyles>
+                                <SpanStyles>Công ty TNHH SPOTY</SpanStyles>
                             </span>
                         </PContentStyles>
                         <PContentStyles>

@@ -47,7 +47,7 @@ export const signin = catchAsync(async (req: Request, res: Response, next: NextF
     }).select('+password');
 
     if (!(user && (await user.comparePassword(password, user.password))))
-        return next(new AppError(StatusCodes.UNAUTHORIZED, 'Incorrect email or password'));
+        return next(new AppError(StatusCodes.UNAUTHORIZED, 'Email/ SĐT hoặc mật khẩu không chính xác'));
 
     const token = createToken(user?.id);
     if (user) user.password = ''; // problem
@@ -231,7 +231,7 @@ export const changePassword = catchAsync(async (req: Request, res: Response, nex
     const { currentPassword, newPassword, newConfirmPassword } = req.body;
     const user = await User.findById(res.locals.user._id).select('+password');
     if (!(user && (await user.comparePassword(currentPassword, user.password))))
-        return next(new AppError(StatusCodes.UNAUTHORIZED, 'Incorrect email or password'));
+        return next(new AppError(StatusCodes.UNAUTHORIZED, 'Email/ SĐT hoặc mật khẩu không chính xác'));
 
     user.password = newPassword;
     user.passwordConfirm = newConfirmPassword;
